@@ -1,4 +1,4 @@
-#DataSource configuration for Postgresql
+#Spring, JPA, Postgres, Mail configuration
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/tokinn
@@ -33,3 +33,9 @@ facebook:
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://graph.facebook.com/me
+    
+#Messenger Bot Configuration
+messenger4j:
+  appSecret: efd25dcde198d47ff5601000eec884f6
+  verifyToken: aslkfjdasñdjfklj
+  pageAccessToken: EAAXFsKOtKXsBAEB7uxb8v6negHqqw1zN75lczEBeGzehuiBoy1VMYtZAinrL0wA6IZCp3l9pRVNxDgq9iiqq8kZCv1W6veQUJRIwPjxnnpNoesS0Ws76jvJ3KZCc9lNLwhqGaFJUKslpVsGhRqI2sml2iZBtfR3s1aCCRvxxLmX7BIyjivAZAA
