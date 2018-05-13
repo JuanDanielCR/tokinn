@@ -49,7 +49,9 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	/*OAuth2 Authentication configuration*/
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable();
 	    http.antMatcher("/**").addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+	    //http.antMatcher("/callaback").a
 	    //http.authorizeRequests().anyRequest().authenticated().and().logout().logoutSuccessUrl("/tokinn/inicio").permitAll();
 	}
 	
