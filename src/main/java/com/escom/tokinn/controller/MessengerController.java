@@ -51,9 +51,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/callback")
-public class MessengerPlatformCallbackHandler {
+public class MessengerController {
 	private static final String RESOURCE_URL = "https://raw.githubusercontent.com/fbsamples/messenger-platform-samples/master/node/public";
-	private static final Log logger = LogFactory.getLog(MessengerPlatformCallbackHandler.class);
+	private static final Log logger = LogFactory.getLog(MessengerController.class);
 	
     private final MessengerReceiveClient receiveClient;
     private final MessengerSendClient sendClient;
@@ -67,7 +67,7 @@ public class MessengerPlatformCallbackHandler {
      * @param sendClient  the initialized {@code MessengerSendClient}
      */
     @Autowired
-    public MessengerPlatformCallbackHandler(@Value("${messenger4j.appSecret}") final String appSecret,
+    public MessengerController(@Value("${messenger4j.appSecret}") final String appSecret,
                                             @Value("${messenger4j.verifyToken}") final String verifyToken,
                                             final MessengerSendClient sendClient) {
 
