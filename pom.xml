@@ -83,6 +83,12 @@
 		    <artifactId>jasperreports</artifactId>
 		    <version>6.4.0</version>
 		</dependency>
+		<!-- Conekta payments -->
+		<dependency>
+		  <groupId>io.conekta</groupId>
+		  <artifactId>conekta-java</artifactId>
+		  <version>2.1.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>

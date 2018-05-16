@@ -46,7 +46,7 @@ public class ReportsController {
 			parameterMap.put("datasource",jRDataSource);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameterMap, jRDataSource);
 			response.setContentType("application/x-pdf");
-			response.setHeader("Content-Disposition","inline: filename=report.pdf");
+			response.setHeader("Content-Disposition","inline; filename=\"report.pdf\"");
 			
 			final OutputStream outputStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
