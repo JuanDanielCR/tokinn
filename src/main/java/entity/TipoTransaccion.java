@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class TipoTransaccion {
+@Table(name="tipoTransaccion")
+public class TipoTransaccion implements Serializable {
+	
+	private static final long serialVersionUID = -2448367112502981687L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="idTipo")

@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class Usuario {
+@Table(name="usuario")
+public class Usuario implements Serializable{
+	
+	private static final long serialVersionUID = 5445395030845924804L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="idUsuario")
@@ -20,7 +25,7 @@ public class Usuario {
 	@Column(name="idFacebook", length=45)
 	private String idFacebook;
 	
-	@Column(name="password", length=45)
+	@Column(name="pass", length=45)
 	private String password;
 	
 	@Column(name="nombre")

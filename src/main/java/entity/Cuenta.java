@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class Cuenta {
+@Table(name="cuenta")
+public class Cuenta implements Serializable{
+	
+	private static final long serialVersionUID = 7908666802705096666L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="idCuenta")
@@ -24,7 +29,7 @@ public class Cuenta {
 	private String cv;
 	
 	@Column(name="fechaVencimiento")
-	private Date nombre;
+	private Date fechaVencimiento;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idUsuario")
@@ -40,13 +45,15 @@ public class Cuenta {
 	public Cuenta() {	
 	}
 	
-	public Cuenta(Long idCuenta, String cv, Date nombre, Usuario usuario, TipoCuenta tipoCuenta) {
+	public Cuenta(Long idCuenta, String cv, Date fechaVencimiento, Usuario usuario, TipoCuenta tipoCuenta,
+			List<Transaccion> transascciones) {
 		super();
 		this.idCuenta = idCuenta;
 		this.cv = cv;
-		this.nombre = nombre;
+		this.fechaVencimiento = fechaVencimiento;
 		this.usuario = usuario;
 		this.tipoCuenta = tipoCuenta;
+		this.transascciones = transascciones;
 	}
 
 	public Long getIdCuenta() {
@@ -65,12 +72,20 @@ public class Cuenta {
 		this.cv = cv;
 	}
 
-	public Date getNombre() {
-		return nombre;
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
 	}
 
-	public void setNombre(Date nombre) {
-		this.nombre = nombre;
+	public void setFechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public List<Transaccion> getTransascciones() {
+		return transascciones;
+	}
+
+	public void setTransascciones(List<Transaccion> transascciones) {
+		this.transascciones = transascciones;
 	}
 
 	public Usuario getUsuario() {

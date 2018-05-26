@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-public class EstadoCuenta {
+@Table(name="estadoCuenta")
+public class EstadoCuenta implements Serializable{
+
+	private static final long serialVersionUID = -8039392082856829040L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="idEstadoCuenta")
