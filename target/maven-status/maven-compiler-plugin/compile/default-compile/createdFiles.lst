@@ -1,0 +1,13 @@
+com\escom\tokinn\controller\MessengerController.class
+entity\EstadoCuenta.class
+com\escom\tokinn\constantes\Constantes.class
+entity\Usuario.class
+entity\Cuenta.class
+com\escom\tokinn\controller\ReportsController.class
+com\escom\tokinn\TokinnApplication.class
+entity\TipoTransaccion.class
+com\escom\tokinn\component\SecurityInterceptor.class
+com\escom\tokinn\controller\LandingController.class
+entity\Transaccion.class
+com\escom\tokinn\configuration\WebMvcConfiguration.class
+entity\TipoCuenta.class
