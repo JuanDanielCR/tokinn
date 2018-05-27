@@ -1,5 +1,6 @@
-package entity;
+package com.escom.tokinn.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,10 +12,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class TipoCuenta {
+@Table(name="tipo_cuenta")
+public class TipoCuenta implements Serializable{
+
+	private static final long serialVersionUID = -7635690072078123476L;
+
 	@Id
 	@GeneratedValue
-	@Column(name="idTipo")
+	@Column(name="id_tipo")
 	private Long idTipoCuenta;
 	
 	@Column(name="nombre")

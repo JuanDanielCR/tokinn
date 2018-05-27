@@ -1,5 +1,6 @@
-package entity;
+package com.escom.tokinn.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,28 +13,32 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-public class Transaccion {
+@Table(name="transaccion")
+public class Transaccion implements Serializable{
+	
+	private static final long serialVersionUID = -1541223548494871380L;
+
 	@Id
 	@GeneratedValue
-	@Column(name="idTransaccion")
+	@Column(name="id_transaccion")
 	private Long idTransaccion;
 	
-	@Column(name="nombreItem")
+	@Column(name="nombre_item")
 	private String nombreItem;
 	
 	@Column(name="descripcion")
 	private String descripcion;
 	
-	@Column(name="precioUnitario")
+	@Column(name="precio_unitario")
 	private Double precioUnitario;
 	
 	@Column(name="cantidad")
 	private Integer cantidad;
 	
-	@Column(name="fechaTransaccion")
+	@Column(name="fecha_transaccion")
 	private Date fechaTransaccion;
 	
-	@Column(name="tokenAutorizacion")
+	@Column(name="token_autorizacion")
 	private String tokenAutorizacion;
 	
 	@Column(name="producto")
@@ -43,11 +48,11 @@ public class Transaccion {
 	private Double amount;
 
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="idCuenta")
+	@JoinColumn(name="id_cuenta")
 	private Cuenta cuenta;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="idTipo")
+	@JoinColumn(name="id_tipo")
 	private TipoTransaccion tipoTransaccion;
 	
 	public Transaccion() {	

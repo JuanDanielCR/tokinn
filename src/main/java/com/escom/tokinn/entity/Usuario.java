@@ -1,5 +1,6 @@
-package entity;
+package com.escom.tokinn.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,25 +12,29 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class Usuario {
+@Table(name="usuario")
+public class Usuario implements Serializable{
+	
+	private static final long serialVersionUID = 5445395030845924804L;
+
 	@Id
 	@GeneratedValue
-	@Column(name="idUsuario")
+	@Column(name="id_usuario")
 	private Long idUsuario;
 	
-	@Column(name="idFacebook", length=45)
+	@Column(name="id_facebook", length=45)
 	private String idFacebook;
 	
-	@Column(name="password", length=45)
+	@Column(name="pass", length=45)
 	private String password;
 	
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="apellidoPaterno")
+	@Column(name="apellido_paterno")
 	private String apellidoPaterno;
 	
-	@Column(name="apellidoMaterno")
+	@Column(name="apellido_materno")
 	private String apellidoMaterno;
 	
 	@Column(name="email", unique=true)
