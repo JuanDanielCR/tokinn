@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.escom.tokinn.TokinnApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 53.443 s - in com.escom.tokinn.TokinnApplicationTests
