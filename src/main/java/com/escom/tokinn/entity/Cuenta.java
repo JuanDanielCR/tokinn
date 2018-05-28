@@ -44,6 +44,9 @@ public class Cuenta implements Serializable{
 	
 	@OneToMany(mappedBy = "cuenta", fetch=FetchType.EAGER)
 	private List<Transaccion> transacciones;
+	
+	@OneToMany(mappedBy = "cuenta", fetch=FetchType.EAGER)
+	private List<EstadoCuenta> estados;
 
 	public Cuenta() {	
 	}
@@ -115,6 +118,14 @@ public class Cuenta implements Serializable{
 
 	public void setTransacciones(List<Transaccion> transacciones) {
 		this.transacciones = transacciones;
+	}
+
+	public List<EstadoCuenta> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<EstadoCuenta> estados) {
+		this.estados = estados;
 	}
 	
 }

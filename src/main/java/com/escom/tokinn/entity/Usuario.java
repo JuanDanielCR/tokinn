@@ -46,6 +46,9 @@ public class Usuario implements Serializable{
 	@Column(name="telefono")
 	private String telefono;
 	
+	@Column(name="has_token_activated")
+	private Boolean hasToken;
+	
 	@OneToMany(mappedBy = "usuario", fetch=FetchType.EAGER)
 	private List<Cuenta> cuentas;
 	
@@ -54,7 +57,8 @@ public class Usuario implements Serializable{
 	}
 
 	public Usuario(Long idUsuario, String idFacebook, String password, String nombre, String apellidoPaterno,
-			String apellidoMaterno, String email, String direccion, String telefono, List<Cuenta> cuentas) {
+			String apellidoMaterno, String email, String direccion, String telefono, Boolean hasToken,
+			List<Cuenta> cuentas) {
 		super();
 		this.idUsuario = idUsuario;
 		this.idFacebook = idFacebook;
@@ -65,8 +69,10 @@ public class Usuario implements Serializable{
 		this.email = email;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.hasToken = hasToken;
 		this.cuentas = cuentas;
 	}
+
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -146,6 +152,14 @@ public class Usuario implements Serializable{
 
 	public void setCuentas(List<Cuenta> cuentas) {
 		this.cuentas = cuentas;
+	}
+
+	public Boolean getHasToken() {
+		return hasToken;
+	}
+
+	public void setHasToken(Boolean hasToken) {
+		this.hasToken = hasToken;
 	}
 	
 }
