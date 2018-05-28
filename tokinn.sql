@@ -25,3 +25,9 @@ ALTER TABLE public.transaccion OWNER TO postgres;
 --usuario
 CREATE TABLE public.usuario() WITH ( OIDS=FALSE );
 ALTER TABLE public.usuario OWNER TO postgres;
+
+
+--INSERT usuario
+INSERT INTO public.usuario(id_usuario, id_facebook, apellido_paterno, apellido_materno, nombre, direccion, email, pass, telefono)VALUES (1, null, 'Castillo', 'Reyes', 'Juan Daniel', 'Calle Orquídeas M26 LT.37 No 32 Coacalco Estado de México', 'castilloreyesjuan@gmail.com', 'admin123', '3313979662');
+INSERT INTO public.usuario(id_usuario, id_facebook, apellido_paterno, apellido_materno, nombre, direccion, email, pass, telefono)VALUES (2, null, 'Castillo', 'Reyes', 'Eduardo Armando', 'Calle Orquídeas M26 LT.37 No 32 Coacalco Estado de México', 'armandocreyes@gmail.com', 'prueba123', '5526471243');
+  
