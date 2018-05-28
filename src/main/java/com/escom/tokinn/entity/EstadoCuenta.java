@@ -43,7 +43,7 @@ public class EstadoCuenta implements Serializable{
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_cuenta")
-	private Cuenta cuenta;
+	private Cuenta cuentaEstado;
 
 	public EstadoCuenta() {
 		super();
@@ -59,7 +59,7 @@ public class EstadoCuenta implements Serializable{
 		this.key = key;
 		this.tokenAutorizacion = tokenAutorizacion;
 		this.firma = firma;
-		this.cuenta = cuenta;
+		this.cuentaEstado = cuenta;
 	}
 
 	public Long getIdEstadoCuenta() {
@@ -118,12 +118,13 @@ public class EstadoCuenta implements Serializable{
 		this.firma = firma;
 	}
 
-	public Cuenta getCuenta() {
-		return cuenta;
+	public Cuenta getCuentaEstado() {
+		return cuentaEstado;
 	}
 
-	public void setCuenta(Cuenta cuenta) {
-		this.cuenta = cuenta;
+	public void setCuentaEstado(Cuenta cuentaEstado) {
+		this.cuentaEstado = cuentaEstado;
 	}
+
 	
 }

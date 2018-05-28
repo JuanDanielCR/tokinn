@@ -45,7 +45,7 @@ public class Cuenta implements Serializable{
 	@OneToMany(mappedBy = "cuenta", fetch=FetchType.EAGER)
 	private List<Transaccion> transacciones;
 	
-	@OneToMany(mappedBy = "cuenta", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "cuentaEstado", fetch=FetchType.LAZY)
 	private List<EstadoCuenta> estados;
 
 	public Cuenta() {	

@@ -32,4 +32,10 @@ public class LandingController {
 	public ModelAndView inicio() {
 		return new ModelAndView(Constantes.LANDING_VIEW);
 	}
+	
+	@GetMapping("/afore")
+	public ModelAndView afore() {
+		return new ModelAndView(Constantes.AFORES_VIEW);
+	}
+	
 }
