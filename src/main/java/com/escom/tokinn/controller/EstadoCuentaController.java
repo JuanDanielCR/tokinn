@@ -3,7 +3,6 @@ package com.escom.tokinn.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.services.UsuarioService;
@@ -35,7 +32,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @Controller
 @RequestMapping("/tokinn")
-public class ReportsController {
+public class EstadoCuentaController {
 
 	@Autowired
 	@Qualifier("usuarioService")

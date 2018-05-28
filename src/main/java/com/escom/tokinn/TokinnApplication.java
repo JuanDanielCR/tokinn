@@ -93,7 +93,7 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	
 	@RequestMapping("/")
 	public ModelAndView loginFacebook() {
-		return new ModelAndView(Constantes.TARJETA_VIEW);
+		return new ModelAndView(Constantes.LOGIN_VIEW);
 	}
 	
 	/**
