@@ -6,8 +6,7 @@ public class Constantes {
 	public static final String LOGIN_VIEW = "login_tarjeta";
 	public static final String INVERSIONES_VIEW = "inversiones";
 	public static final String AFORES_VIEW = "afores";
-	
-	
+
 	//Usuario
 	public static final String USUARIO_ADD = "/usuario/registrar";
 	public static final String USUARIO_EDIT = "/usuario/editar";
