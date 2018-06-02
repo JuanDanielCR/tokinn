@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.escom.tokinn.constantes.Constantes;
 import com.escom.tokinn.services.TransaccionService;
-
 @Controller
 @RequestMapping("/transaccion")
 public class TransaccionController {

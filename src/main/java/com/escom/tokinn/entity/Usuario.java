@@ -22,10 +22,10 @@ public class Usuario implements Serializable{
 	@Column(name="id_usuario")
 	private Long idUsuario;
 	
-	@Column(name="id_facebook", length=45)
+	@Column(name="id_facebook")
 	private String idFacebook;
 	
-	@Column(name="pass", length=45)
+	@Column(name="pass")
 	private String password;
 	
 	@Column(name="nombre")

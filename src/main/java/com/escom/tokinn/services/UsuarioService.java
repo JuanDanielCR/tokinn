@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.escom.tokinn.entity.Usuario;
@@ -14,8 +15,16 @@ public class UsuarioService {
 	@Autowired
 	@Qualifier("usuarioRepository")
 	private UsuarioRepository usuarioRepository;
+	private BCryptPasswordEncoder bpe;
 	
 	public List<Usuario> findUsuarios(){
 		return usuarioRepository.findAll();
+	}
+	
+	public Usuario registrarUsuario(Usuario entidad) {
+		bpe = new BCryptPasswordEncoder();
+		entidad.setPassword(bpe.encode(entidad.getPassword()));
+		entidad.setHasToken(Boolean.FALSE);
+		return usuarioRepository.save(entidad);
 	}
 }
