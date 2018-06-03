@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Usuario;
+import com.escom.tokinn.model.UsuarioModel;
 import com.escom.tokinn.repository.CuentaRepository;
 import com.escom.tokinn.repository.UsuarioRepository;
 
@@ -43,5 +44,11 @@ public class UsuarioService {
 			usuario = cuenta.getUsuario();
 		}
 		return usuario;
+	}
+	
+	public Boolean verificarLogin(UsuarioModel model) {
+		Boolean isValid = Boolean.FALSE;
+		System.out.println("idUsuario: "+model.getId()+" pass: "+model.getPassword());
+		return isValid;
 	}
 }

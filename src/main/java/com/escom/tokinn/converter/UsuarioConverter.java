@@ -10,6 +10,7 @@ public class UsuarioConverter {
 	//Model -> Entity
 	public Usuario modelToEntity(UsuarioModel model) {
 		Usuario entidad = new Usuario();
+		entidad.setIdUsuario(model.getId());
 		entidad.setIdFacebook(model.getIdFacebook());
 		entidad.setPassword(model.getPassword());
 		entidad.setNombre(model.getNombre());
@@ -24,6 +25,7 @@ public class UsuarioConverter {
 	//Entity -> Model
 	public UsuarioModel entityToModel(Usuario entidad) {
 		UsuarioModel model = new UsuarioModel();
+		model.setId(entidad.getIdUsuario());
 		model.setIdFacebook(entidad.getIdFacebook());
 		model.setPassword(entidad.getPassword());
 		model.setNombre(entidad.getNombre());

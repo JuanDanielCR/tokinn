@@ -22,7 +22,7 @@
     <div class="loginColumns animated fadeInDown">
         <div class="row">
 			<div class="alert alert-danger" th:if="${error != null}">
-	        	El correo o la contraseña ingresados son incorrectos, inténtalo de nuevo.
+	        	La contraseña o el token ingresados son incorrectos inténtalo de nuevo.
 	        </div>
 	        <div class="alert alert-info" th:if="${logout != null}">
 	        	¡Sesión terminada con éxito, que tenga un buen día!
@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
-                    <form id="cuentaForm" name="formLogin" class="m-t" role="form">
+                    <form id="cuentaForm" name="formLogin" method = "post" th:action="@{/tokinn/login}" class="m-t" role="form">
                         <div class="form-group">
                             <input class="form-control" name="numeroTarjeta" id="numeroTarjeta" placeholder="Numero de tarjeta">
                         </div>
@@ -55,13 +55,15 @@
                             <input class="form-control" name="cvv" id="cvv" placeholder="CVV" >
                         </div>
                         <div class="form-group" id="password" >
-                            <input type="password" name="password" class="form-control" placeholder="Password" >
+                            <input type="password" name="password" th:value="${usuario.password}" class="form-control" placeholder="Password" >
                         </div>
                         <div class="form-group" id="token">
-                            <input class="form-control" name="token" id="token" placeholder="Token" disabled>
+                            <input class="form-control" name="token" th:value="${usuario.token}" id="token" placeholder="Token" disabled>
                             <label id="nota_token">Habilita esta función en tu panel de control.</label>
                         </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b">Entrar</button>
+                        <input type="hidden" id="userId" name="userId" th:value="${usuario.id}" class="form-control" >
+                        <button id="verificar" class="btn btn-primary block full-width m-b">Verificar</button>
+                        <button id="submit" type="submit" class="btn btn-primary block full-width m-b">Entrar</button>
                         <a href="#">
                             <small>¿Olvidaste tu contraseña?</small>
                         </a>
@@ -90,7 +92,8 @@ $( document ).ready(function() {
 	$("#password").hide();
 	$("#token").hide();
 	$("#nota_token").hide();
-    $("#cuentaForm").submit(function(event) {
+	$("#submit").hide();
+    $("#verificar").click(function(event) {
 		event.preventDefault();
 		ajaxPost();
 	});
@@ -120,12 +123,16 @@ $( document ).ready(function() {
 					}
 					$("#respuesta_ajax").append( "<p>Datos correctos, por favor ingresa tu información en los campos vacíos</p>" );
 					$("#respuesta_ajax").addClass("alert alert-success");
+					$("#verificar").hide();
+					$("#sumbit").show();
 				}else{
 					$("#password").hide();
 					$("#token").hide();
 					$("#nota_token").hide();
 					$("#respuesta_ajax").append( "<p>Datos incorrectos, intente de nuevo</p>" );
 					$("#respuesta_ajax").addClass("alert alert-danger");
+					$("#verificar").show();
+					$("#sumbit").hide();
 				}
 				$("#respuesta_ajax").show();
 			},
