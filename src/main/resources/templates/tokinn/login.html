@@ -17,6 +17,8 @@
 </head>
 
 <body class="gray-bg">
+
+  <div class="w3-card" id="login1">
     <div class="loginColumns animated fadeInDown">
         <div class="row">
 			<div class="alert alert-danger" th:if="${error != null}">
@@ -27,6 +29,9 @@
 	        </div>
 	        <div class="alert alert-success" th:if="${success != null}">
 	            ¡Registro exitoso, ahora puedes iniciar sesión!
+	        </div>
+	        <div class="alert alert-success" id="token-activated" style="display:none;">
+	        	¡Cuenta válida ingrese los siguientes datos!
 	        </div>
             <div class="col-md-6">
                 <h2 class="font-bold">Bienvenido a BBWA Bankito</h2>
@@ -41,28 +46,17 @@
                     Incluso podrías solicitar el token usando el messenger de facebook.
                 </p>
                 <br/>
-                <!--
-                <p>
-                    (Próximamente), podrás descargar la aplicación movil para obtener tu token desde tu celular. Esta opción estará disponible en la App Store y Google Play
-                </p>
-              -->
-
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
-                    <form class="m-t" role="form" action="index.html">
+                    <form id="cuentaForm" class="m-t" role="form">
                         <div class="form-group">
-                            <input class="form-control" placeholder="Numero de tarjeta" required="">
+                            <input class="form-control" id="numeroTarjeta" placeholder="Numero de tarjeta" required="">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="CVV" required="">
+                            <input class="form-control" id="cvv" placeholder="CVV" required="">
                         </div>
-                        <!--ESTA PARTE SE ACTIVA SI ESTÁ HABILITADA LA OPCION DE TOKINN
-                        <div class="form-group">
-                            <input type="tokinn" class="form-control" placeholder="Tokinn" required="">
-                        </div>
-                        -->
-                        <button type="submit" class="btn btn-primary block full-width m-b">Next</button>
+                        <button type="submit" class="btn btn-primary block full-width m-b" onclick="login2()">Next</button>
                         <a href="#">
                             <small>¿Olvidaste tu contraseña?</small>
                         </a>
@@ -85,7 +79,84 @@
             </div>
         </div>
     </div>
+  </div>
 
+  <div class="w3-card" id="login2" style="display:none;">
+    <div class="loginColumns animated fadeInDown">
+        <div class="row">
+
+            <div class="col-md-6">
+                <h2 class="font-bold">Bienvenido a BBWA Bankito</h2>
+                <img th:src="@{/img/Tokinn.jpg}" class="img-responsive">
+            </div>
+            <div class="col-md-6">
+                <div class="ibox-content">
+                    <form class="m-t" role="form" action="index.html">
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" required="">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Tokinn de inicio de sesión" required="">
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b" onclick="login2()">Login</button>
+                        <a href="#">
+                            <small>¿Olvidaste tu contraseña?</small>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                Copyright BBWA Bankito
+            </div>
+            <div class="col-md-6 text-right">
+               <small>© 2018</small>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<script>
+$( document ).ready(function() {
+    $("#cuentaForm").submit(function(event) {
+		event.preventDefault();
+		ajaxPost();
+	});
+    
+    function ajaxPost(){
+    	var formData = {
+    		numeroTarjeta : $("#numeroTarjeta").val(),
+    		cvv :  $("#cvv").val()
+    	}
+
+    	$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : window.location + "api/login",
+			data : JSON.stringify(formData),
+			dataType : 'json',
+			success : function(result) {
+				if(result.status == "Done"){
+					var log2 = document.getElementById("login2");
+					var msg = document.getElementById("token-activated");
+					log2.style.display=block;
+					msg.style.display=block;
+					console.log("id: "+result.data.id);
+				}else{
+					
+				}
+				console.log(result);
+			},
+			error : function(e) {
+				alert("Error!")
+				console.log("ERROR: ", e);
+			}
+		});
+    }
+})
+</script>
 </body>
 
 </html>
