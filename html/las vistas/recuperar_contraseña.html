@@ -20,14 +20,12 @@
 
     <div class="passwordBox animated fadeInDown">
         <div class="row">
-
             <div class="col-md-12">
                 <div class="ibox-content">
-
                     <h2 class="font-bold">Recuperar Contraseña</h2>
                     <br/>
                     <p>
-                        Introduce tu nombre completo, y el número de tu tarjeta para recuperar la contraseña.
+                        Introduce los datos siguientes para recuperar tu contraseña.
                     </p>
 
                     <div class="row">
@@ -43,8 +41,16 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Apellido Materno" required="">
                                 </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="**** **** **** ****" required="" />
+                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                </div>
+                                <br/>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="16 dígitos de tu tarjeta" required="">
+                                    <input type="text" class="form-control" placeholder="CVV" required="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="e-mail" required="">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary block full-width m-b">Send new password</button>
