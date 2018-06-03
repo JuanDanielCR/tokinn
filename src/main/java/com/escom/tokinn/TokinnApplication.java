@@ -1,12 +1,11 @@
 package com.escom.tokinn;
 
 import java.security.Principal;
-
 import javax.servlet.Filter;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,21 +25,27 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.services.UsuarioService;
 import com.github.messenger4j.MessengerPlatform;
 import com.github.messenger4j.send.MessengerSendClient;
 
 @SpringBootApplication
 @EnableOAuth2Client
 @RestController
+@SessionAttributes("userData")
 public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	
 	private static final Log logger = LogFactory.getLog(TokinnApplication.class);
 	
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
+	
+	@Autowired
+	@Qualifier("usuarioService")
+	private UsuarioService usuarioService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TokinnApplication.class, args);
@@ -51,8 +56,6 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 	    http.antMatcher("/**").addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
-	    //http.antMatcher("/callaback").a
-	    //http.authorizeRequests().anyRequest().authenticated().and().logout().logoutSuccessUrl("/tokinn/inicio").permitAll();
 	}
 	
 	@Bean
@@ -83,6 +86,7 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 		UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId());
 		tokenServices.setRestTemplate(facebookTemplate);
 		facebookFilter.setTokenServices(tokenServices);
+		System.out.println("idFacebook: "+facebook().getClientId());
 		return facebookFilter;
 	}
 	
@@ -93,7 +97,7 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	
 	@RequestMapping("/")
 	public ModelAndView loginFacebook() {
-		return new ModelAndView(NavigationConstants.LOGIN_VIEW);
+		return new ModelAndView(NavigationConstants.BASE_VIEW);
 	}
 	
 	/**

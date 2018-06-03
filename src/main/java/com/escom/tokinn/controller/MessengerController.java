@@ -6,6 +6,7 @@ import static com.github.messenger4j.MessengerPlatform.SIGNATURE_HEADER_NAME;
 import static com.github.messenger4j.MessengerPlatform.VERIFY_TOKEN_REQUEST_PARAM_NAME;
 
 import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.services.TokenService;
 import com.github.messenger4j.MessengerPlatform;
 import com.github.messenger4j.exceptions.MessengerApiException;
@@ -45,15 +46,18 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @RestController
 @RequestMapping("/callback")
+@SessionAttributes("userData")
 public class MessengerController {
 	
 	@Autowired
@@ -65,6 +69,7 @@ public class MessengerController {
     
 	private final MessengerReceiveClient receiveClient;
     private final MessengerSendClient sendClient;
+    private String fbId;
 
     /**
      * Constructs the {@code MessengerPlatformCallbackHandler} and initializes the {@code MessengerReceiveClient}.
@@ -100,7 +105,11 @@ public class MessengerController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<String> verifyWebhook(@RequestParam(MODE_REQUEST_PARAM_NAME) final String mode,
                                                 @RequestParam(VERIFY_TOKEN_REQUEST_PARAM_NAME) final String verifyToken,
-                                                @RequestParam(CHALLENGE_REQUEST_PARAM_NAME) final String challenge) {
+                                                @RequestParam(CHALLENGE_REQUEST_PARAM_NAME) final String challenge,
+                                                ModelMap session) {
+    	Usuario usuario = (Usuario) session.get("userData");
+    	fbId = usuario.getIdFacebook();
+    	System.out.println("Facebook Id: "+fbId);
         logger.debug("Received Webhook verification request - mode: "+mode+" | verifyToken: "+verifyToken+" | challenge: "+challenge);
         try {
             return ResponseEntity.ok(this.receiveClient.verifyWebhook(mode, verifyToken, challenge));
@@ -135,7 +144,7 @@ public class MessengerController {
             final NotificationType notificationType = NotificationType.REGULAR;
             final String metadata = "DEVELOPER_DEFINED_METADATA";
             
-            this.sendClient.sendTextMessage(recipient, notificationType,tokenService.generateToken(recipientId, tipoToken), metadata);
+            this.sendClient.sendTextMessage(recipient, notificationType,tokenService.generateToken(fbId, tipoToken), metadata);
             
         } catch (MessengerApiException | MessengerIOException e) {
             handleSendException(e);

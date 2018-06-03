@@ -57,23 +57,30 @@ public class UsuarioService {
 	
 	public Respuesta<Usuario> verificarLogin(UsuarioModel model) {
 		Respuesta<Usuario> respuesta = new Respuesta<Usuario>();
-		System.out.println("idUsuario: "+model.getId()+" pass: "+model.getPassword()+" token: "+model.getToken());
 		Usuario entidad = usuarioRepository.findByIdUsuarioAndPassword(model.getId(), model.getPassword());
-		System.out.println("entidad: "+entidad);
 		if(entidad != null) {
+			respuesta.setEntidad(entidad);
 			//Tiene token activado
 			if(entidad.getHasToken() == Boolean.TRUE 
 					&& !tokenService.verifyToken(entidad.getIdFacebook(),NavigationConstants.TOKEN_INICIO, model.getToken())) {
 				respuesta.setCodigoRespuesta(CodigoRespuesta.ERROR);
 				respuesta.setMensaje(Bundle.MSG2_ERROR_TOKEN);
-			} else {
-				System.out.println("Token inhabilitado");
 			}
 		} else {
 			//Password inválido
 			respuesta.setCodigoRespuesta(CodigoRespuesta.ERROR);
 			respuesta.setMensaje(Bundle.MSG2_ERROR_PASSWORD);
 		}
+		return respuesta;
+	}
+	
+	public Respuesta<Usuario> guardarAutenticacionFacebook(Usuario usuario, String idFacebook){
+		Respuesta<Usuario> respuesta = new Respuesta<>();
+		usuario.setIdFacebook(idFacebook);
+		usuario.setHasToken(Boolean.TRUE);
+		usuarioRepository.save(usuario);
+		respuesta.setEntidad(usuario);
+		respuesta.setCodigoRespuesta(CodigoRespuesta.OK);
 		return respuesta;
 	}
 }

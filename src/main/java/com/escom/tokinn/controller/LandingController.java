@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.escom.tokinn.constantes.CodigoRespuesta;
@@ -23,6 +25,7 @@ import com.escom.tokinn.services.UsuarioService;
 
 @Controller
 @RequestMapping("/tokinn")
+@SessionAttributes("userData")
 public class LandingController {
 	
 	@Autowired
@@ -32,6 +35,8 @@ public class LandingController {
 	@Autowired
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
+	
+	public Usuario userData;
 	
 	@GetMapping("/prueba")
 	public ModelAndView prueba() {
@@ -68,11 +73,13 @@ public class LandingController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute("usuario") UsuarioModel model) {
+	public String login(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
 		String redirect = NavigationConstants.LOGIN_VIEW;
 		Respuesta<Usuario> respuestaLogin = usuarioService.verificarLogin(model);
 		if(respuestaLogin.getCodigoRespuesta().equals(CodigoRespuesta.OK)) {
 			//Registro exitoso - Subir a session
+			userData = respuestaLogin.getEntidad();
+			session.put("userData", userData);
 			redirect = NavigationConstants.USUARIO_INDEX+"?success=true";
 		} else {
 			//Error
