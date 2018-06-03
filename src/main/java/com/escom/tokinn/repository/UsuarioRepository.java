@@ -9,4 +9,5 @@ import com.escom.tokinn.entity.Usuario;
 @Repository("usuarioRepository")
 public interface UsuarioRepository extends JpaRepository<Usuario, Serializable>{
 	public abstract Usuario findByEmail(String email);
+	public abstract Usuario findByIdUsuarioAndPassword(Long idUsuario, String password);
 }

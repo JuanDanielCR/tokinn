@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.escom.tokinn.constantes.Constantes;
+import com.escom.tokinn.constantes.NavigationConstants;
 import com.github.messenger4j.MessengerPlatform;
 import com.github.messenger4j.send.MessengerSendClient;
 
@@ -93,7 +93,7 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	
 	@RequestMapping("/")
 	public ModelAndView loginFacebook() {
-		return new ModelAndView(Constantes.LOGIN_VIEW);
+		return new ModelAndView(NavigationConstants.LOGIN_VIEW);
 	}
 	
 	/**

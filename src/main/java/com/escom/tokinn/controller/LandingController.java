@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.escom.tokinn.constantes.Constantes;
+import com.escom.tokinn.constantes.CodigoRespuesta;
+import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.constantes.Respuesta;
 import com.escom.tokinn.converter.UsuarioConverter;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.UsuarioModel;
@@ -35,22 +37,22 @@ public class LandingController {
 	public ModelAndView prueba() {
 		List<Usuario> listaUsuarios = usuarioService.findUsuarios();
 		System.out.println("listaUsuarios: "+listaUsuarios.isEmpty());
-		return new ModelAndView(Constantes.LANDING_VIEW);
+		return new ModelAndView(NavigationConstants.LANDING_VIEW);
 	}
 	
 	@GetMapping("/landing")
 	public ModelAndView inicio() {
-		return new ModelAndView(Constantes.LANDING_VIEW);
+		return new ModelAndView(NavigationConstants.LANDING_VIEW);
 	}
 	
 	@GetMapping("/afores")
 	public ModelAndView afore() {
-		return new ModelAndView(Constantes.AFORES_VIEW);
+		return new ModelAndView(NavigationConstants.AFORES_VIEW);
 	}
 	
 	@GetMapping("/inversiones")
 	public ModelAndView inversiones() {
-		return new ModelAndView(Constantes.INVERSIONES_VIEW);
+		return new ModelAndView(NavigationConstants.INVERSIONES_VIEW);
 	}
 	
 	@GetMapping("/login")
@@ -62,20 +64,19 @@ public class LandingController {
 		model.addAttribute("error", error);
 		model.addAttribute("success", success);
 		model.addAttribute("logout", logout);
-		return new ModelAndView(Constantes.LOGIN_VIEW);
+		return new ModelAndView(NavigationConstants.LOGIN_VIEW);
 	}
 	
 	@PostMapping("/login")
 	public String login(@ModelAttribute("usuario") UsuarioModel model) {
-		System.out.println("Entrando: "+model.getPassword());
-		String redirect = Constantes.LOGIN_VIEW;
-		Boolean validLogin = usuarioService.verificarLogin(model);
-		if(validLogin) {
+		String redirect = NavigationConstants.LOGIN_VIEW;
+		Respuesta<Usuario> respuestaLogin = usuarioService.verificarLogin(model);
+		if(respuestaLogin.getCodigoRespuesta().equals(CodigoRespuesta.OK)) {
 			//Registro exitoso - Subir a session
-			redirect = Constantes.USUARIO_INDEX+"?success=true";
+			redirect = NavigationConstants.USUARIO_INDEX+"?success=true";
 		} else {
 			//Error
-			redirect = Constantes.LOGIN_VIEW+"?error=true";
+			redirect = NavigationConstants.LOGIN_VIEW+"?error=true";
 		}
 		return "redirect:"+redirect;
 	}

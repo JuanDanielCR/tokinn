@@ -61,9 +61,9 @@
                             <input class="form-control" name="token" th:value="${usuario.token}" id="token" placeholder="Token" disabled>
                             <label id="nota_token">Habilita esta función en tu panel de control.</label>
                         </div>
-                        <input type="hidden" id="userId" name="userId" th:value="${usuario.id}" class="form-control" >
+                        <input type="text" id="id" name="id" th:value="${usuario.id}" class="form-control" >
                         <button id="verificar" class="btn btn-primary block full-width m-b">Verificar</button>
-                        <button id="submit" type="submit" class="btn btn-primary block full-width m-b">Entrar</button>
+                        <button id="submit" type="submit" class="btn btn-primary block full-width m-b" style="display:none;">Entrar</button>
                         <a href="#">
                             <small>¿Olvidaste tu contraseña?</small>
                         </a>
@@ -92,7 +92,7 @@ $( document ).ready(function() {
 	$("#password").hide();
 	$("#token").hide();
 	$("#nota_token").hide();
-	$("#submit").hide();
+	$("#id").hide();
     $("#verificar").click(function(event) {
 		event.preventDefault();
 		ajaxPost();
@@ -135,6 +135,7 @@ $( document ).ready(function() {
 					$("#sumbit").hide();
 				}
 				$("#respuesta_ajax").show();
+				$("#id").val(result.data.id);
 			},
 			error : function(e) {
 				alert("!Oh, algo salió mal, intenta más tarde!")

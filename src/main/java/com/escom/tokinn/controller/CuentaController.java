@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.escom.tokinn.constantes.Constantes;
+import com.escom.tokinn.constantes.NavigationConstants;
 import com.escom.tokinn.services.CuentaService;
 
 @Controller
@@ -19,16 +19,16 @@ public class CuentaController {
 	
 	@GetMapping("/registro")
 	public ModelAndView registrar() {
-		return new ModelAndView(Constantes.CUENTA_ADD);
+		return new ModelAndView(NavigationConstants.CUENTA_ADD);
 	}
 	
 	@GetMapping("/gestion")
 	public ModelAndView gestionar() {
-		return new ModelAndView(Constantes.CUENTA_INDEX);
+		return new ModelAndView(NavigationConstants.CUENTA_INDEX);
 	}
 	
 	@GetMapping("/test")
 	public ModelAndView test() {
-		return new ModelAndView(Constantes.CUENTA_VULNERABILIDAD);
+		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
 }

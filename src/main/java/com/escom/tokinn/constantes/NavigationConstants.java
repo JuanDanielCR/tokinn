@@ -1,6 +1,6 @@
 package com.escom.tokinn.constantes;
 
-public class Constantes {
+public class NavigationConstants {
 	//Inicio - Login - Vistas generales
 	public static final String LANDING_VIEW = "/tokinn/landing";
 	public static final String LOGIN_VIEW = "/tokinn/login";
@@ -25,4 +25,10 @@ public class Constantes {
 	//Estado de cuenta
 	public static final String ESTADO_VIEW = "/estado/consultar";
 	
+	//Messenger chatbot
+    public static final String TOKEN_INICIO = "INICIO";
+    public static final String TOKEN_ESTADO = "ESTADO_DE_CUENTA";
+    public static final String TOKEN_TRANSACCION = "TRANSACCION";
+    public static final Integer TOKEN_LENGTH=5;
+    
 }

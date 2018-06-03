@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.escom.tokinn.constantes.Bundle;
+import com.escom.tokinn.constantes.CodigoRespuesta;
+import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.constantes.Respuesta;
 import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.UsuarioModel;
@@ -15,6 +19,11 @@ import com.escom.tokinn.repository.UsuarioRepository;
 
 @Service("usuarioService")
 public class UsuarioService {
+	
+	@Autowired
+	@Qualifier("tokenService")
+	private TokenService tokenService;
+	
 	@Autowired
 	@Qualifier("usuarioRepository")
 	private UsuarioRepository usuarioRepository;
@@ -46,9 +55,25 @@ public class UsuarioService {
 		return usuario;
 	}
 	
-	public Boolean verificarLogin(UsuarioModel model) {
-		Boolean isValid = Boolean.FALSE;
-		System.out.println("idUsuario: "+model.getId()+" pass: "+model.getPassword());
-		return isValid;
+	public Respuesta<Usuario> verificarLogin(UsuarioModel model) {
+		Respuesta<Usuario> respuesta = new Respuesta<Usuario>();
+		System.out.println("idUsuario: "+model.getId()+" pass: "+model.getPassword()+" token: "+model.getToken());
+		Usuario entidad = usuarioRepository.findByIdUsuarioAndPassword(model.getId(), model.getPassword());
+		System.out.println("entidad: "+entidad);
+		if(entidad != null) {
+			//Tiene token activado
+			if(entidad.getHasToken() == Boolean.TRUE 
+					&& !tokenService.verifyToken(entidad.getIdFacebook(),NavigationConstants.TOKEN_INICIO, model.getToken())) {
+				respuesta.setCodigoRespuesta(CodigoRespuesta.ERROR);
+				respuesta.setMensaje(Bundle.MSG2_ERROR_TOKEN);
+			} else {
+				System.out.println("Token inhabilitado");
+			}
+		} else {
+			//Password inválido
+			respuesta.setCodigoRespuesta(CodigoRespuesta.ERROR);
+			respuesta.setMensaje(Bundle.MSG2_ERROR_PASSWORD);
+		}
+		return respuesta;
 	}
 }

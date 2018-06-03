@@ -5,6 +5,8 @@ import static com.github.messenger4j.MessengerPlatform.MODE_REQUEST_PARAM_NAME;
 import static com.github.messenger4j.MessengerPlatform.SIGNATURE_HEADER_NAME;
 import static com.github.messenger4j.MessengerPlatform.VERIFY_TOKEN_REQUEST_PARAM_NAME;
 
+import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.services.TokenService;
 import com.github.messenger4j.MessengerPlatform;
 import com.github.messenger4j.exceptions.MessengerApiException;
 import com.github.messenger4j.exceptions.MessengerIOException;
@@ -33,16 +35,13 @@ import com.github.messenger4j.send.buttons.Button;
 import com.github.messenger4j.send.templates.ButtonTemplate;
 import com.github.messenger4j.send.templates.GenericTemplate;
 import com.github.messenger4j.send.templates.ReceiptTemplate;
-
-import java.security.MessageDigest;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,23 +55,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/callback")
 public class MessengerController {
+	
+	@Autowired
+	@Qualifier("tokenService")
+	private TokenService tokenService;
+	
 	private static final String RESOURCE_URL = "https://raw.githubusercontent.com/fbsamples/messenger-platform-samples/master/node/public";
 	private static final Log logger = LogFactory.getLog(MessengerController.class);
-    private final MessengerReceiveClient receiveClient;
-    private final MessengerSendClient sendClient;
     
-    //TODO: Pasar esto a constantes negocio
-    private static final String INICIO = "INICIO";
-    private static final String ESTADO = "ESTADO_DE_CUENTA";
-    private static final String TRANSACCION = "TRANSACCION";
-    private final int tokenLength=5;
+	private final MessengerReceiveClient receiveClient;
+    private final MessengerSendClient sendClient;
 
     /**
      * Constructs the {@code MessengerPlatformCallbackHandler} and initializes the {@code MessengerReceiveClient}.
-     *
-     * @param appSecret   the {@code Application Secret}
-     * @param verifyToken the {@code Verification Token} that has been provided by you during the setup of the {@code
-     *                    Webhook}
+     * @param appSecret   the {@code Application Secret} obtained from  project config
+     * @param verifyToken the {@code Verification Token} that has been provided by you during the setup of the {@code Webhook}
      * @param sendClient  the initialized {@code MessengerSendClient}
      */
     @Autowired
@@ -97,7 +94,6 @@ public class MessengerController {
 
     /**
      * Webhook verification endpoint.
-     *
      * The passed verification token (as query parameter) must match the configured verification token.
      * In case this is true, the passed challenge string must be returned by this endpoint.
      */
@@ -105,7 +101,6 @@ public class MessengerController {
     public ResponseEntity<String> verifyWebhook(@RequestParam(MODE_REQUEST_PARAM_NAME) final String mode,
                                                 @RequestParam(VERIFY_TOKEN_REQUEST_PARAM_NAME) final String verifyToken,
                                                 @RequestParam(CHALLENGE_REQUEST_PARAM_NAME) final String challenge) {
-
         logger.debug("Received Webhook verification request - mode: "+mode+" | verifyToken: "+verifyToken+" | challenge: "+challenge);
         try {
             return ResponseEntity.ok(this.receiveClient.verifyWebhook(mode, verifyToken, challenge));
@@ -133,64 +128,6 @@ public class MessengerController {
         }
     }
 
-    //TODO: Pasar esto aun service ----------------------------------------------------
-    private static String getHash(String txt) {
-        try {
-            MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(txt.getBytes());
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < array.length; ++i) {
-                //Linea para homogeneizar el hash producido al convertirlo en un String
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
-            }
-            return sb.toString();
-        } catch (java.security.NoSuchAlgorithmException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-    
-    /*Funcion que regresa una cadena con el formato requerido de la fecha y hora*/
-    private String getDateTime(Date date){
-        SimpleDateFormat formato = new SimpleDateFormat("yyyyMMddhhmm");
-        return formato.format(date);
-    }
-    
-    /*Funcion que suma o resta minutos a la fecha actual*/
-    private Date addMinutes(Date date, int num){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.MINUTE, num);
-        return calendar.getTime();
-    }
-    
-    /*Funcion que genera los tokens si se restan o suman minutos*/
-    private String generateToken(String id, String type, Date date){
-        return getHash(id+type+getDateTime(date)).substring(0, tokenLength).toUpperCase();
-    }
-    
-    /*Funcion que genera el token actual ESTA FUNCION ES LA QUE USA EL BOT
-    Se manda el ID del usuario y se instancia el TIPO DE TOKEN
-    devuelve una cadena con el TOKEN GENERADO*/
-    public String generateToken(String id, String type){
-        return getHash(id+type+getDateTime(new Date())).substring(0, tokenLength).toUpperCase();
-    }
-    
-    /*Funcion que verifica el token, tiene un umbral de 2 a 3 minutos ESTA FUNCION VA EN EL SERVIDOR
-    Se manda el ID del usuario, se instancia el TIPO DE TOKEN y se manda el TOKEN RECIVIDO
-    devuelve TRUE si es aceptado y un FALSE si no*/
-    public boolean verifyToken(String id, String type, String token){
-        if(token.equals(generateToken(id,type,new Date()))){
-            return true;
-        }else if(token.equals(generateToken(id,type,addMinutes(new Date(),-2)))){
-            return true;
-        }else if(token.equals(generateToken(id,type,addMinutes(new Date(),-1)))){
-            return true;
-        }
-        return false;
-    } 
-    
-    //--------------------------------
     private void sendTokenMessage(String recipientId, String text, String tipoToken) {
         try {
         	//TODO:Revisar si el ChatBot esta habilitado
@@ -198,7 +135,7 @@ public class MessengerController {
             final NotificationType notificationType = NotificationType.REGULAR;
             final String metadata = "DEVELOPER_DEFINED_METADATA";
             
-            this.sendClient.sendTextMessage(recipient, notificationType, generateToken(recipientId, tipoToken), metadata);
+            this.sendClient.sendTextMessage(recipient, notificationType,tokenService.generateToken(recipientId, tipoToken), metadata);
             
         } catch (MessengerApiException | MessengerIOException e) {
             handleSendException(e);
@@ -207,76 +144,58 @@ public class MessengerController {
     
     private TextMessageEventHandler newTextMessageEventHandler() {
         return event -> {
-            logger.debug("Received TextMessageEvent: "+ event);
-
             final String messageId = event.getMid();
             final String messageText = event.getText();
             final String senderId = event.getSender().getId();
             final Date timestamp = event.getTimestamp();
-
-            System.out.println("senderId: "+senderId);
-            System.out.println("messageText: "+messageText);
-            logger.info("Received message '"+messageId+"' with text '"+messageText+"' from user '"+senderId+"' at '"+timestamp+"'");
-
+            System.out.println("messageId: "+messageId+" senderId: "+senderId+" received messageText: "+messageText+" at: "+timestamp);
             try {
                 switch (messageText.toLowerCase()) {
 	                case "token_inicio":
-	                    sendTokenMessage(senderId, messageText, INICIO);
+	                    sendTokenMessage(senderId, messageText, NavigationConstants.TOKEN_INICIO);
 	                    break;
 	                case "token_estado":
-	                    sendTokenMessage(senderId, messageText, ESTADO);
+	                    sendTokenMessage(senderId, messageText, NavigationConstants.TOKEN_ESTADO);
 	                    break;
 	                case "token_transaccion":
-	                    sendTokenMessage(senderId, messageText, TRANSACCION);
+	                    sendTokenMessage(senderId, messageText, NavigationConstants.TOKEN_TRANSACCION);
 	                    break;
                     case "image":
                         sendImageMessage(senderId);
                         break;
-
                     case "gif":
                         sendGifMessage(senderId);
                         break;
-
                     case "audio":
                         sendAudioMessage(senderId);
                         break;
-
                     case "video":
                         sendVideoMessage(senderId);
                         break;
-
                     case "file":
                         sendFileMessage(senderId);
                         break;
-
                     case "button":
                         sendButtonMessage(senderId);
                         break;
-
                     case "generic":
                         sendGenericMessage(senderId);
                         break;
-
                     case "receipt":
                         sendReceiptMessage(senderId);
                         break;
-
                     case "quick reply":
                         sendQuickReply(senderId);
                         break;
-
                     case "read receipt":
                         sendReadReceipt(senderId);
                         break;
-
                     case "typing on":
                         sendTypingOn(senderId);
                         break;
-
                     case "typing off":
                         sendTypingOff(senderId);
                         break;
-
                     default:
                         sendTextMessage(senderId, messageText);
                 }
