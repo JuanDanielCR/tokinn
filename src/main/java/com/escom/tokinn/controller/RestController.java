@@ -28,9 +28,15 @@ public class RestController {
 	@PostMapping(value = "/login")
 	public Response postCustomer(@RequestBody LoginModel model) {
 		// Create Response Object
+		Response response;
 		Usuario entidad = usuarioService.findUsuarioByCuenta(model.getNumeroTarjeta(), model.getCvv());
-		UsuarioModel usuarioModel = usuarioConverter.entityToModel(entidad);
-		Response response = new Response("Done", usuarioModel);
+		if(entidad.getIdUsuario() != null) {
+			UsuarioModel usuarioModel = usuarioConverter.entityToModel(entidad);
+			response = new Response("Done", usuarioModel);
+		}else {
+			response = new Response("Error", new UsuarioModel());
+		}
+		 
 		return response;
 	}
 }

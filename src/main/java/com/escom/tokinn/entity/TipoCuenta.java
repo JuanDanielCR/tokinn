@@ -26,7 +26,7 @@ public class TipoCuenta implements Serializable{
 	private String nombre;
 	
 	@Column(name="descripcion")
-	private Long descripcion;
+	private String descripcion;
 
 	@OneToMany(mappedBy = "tipoCuenta", fetch=FetchType.EAGER)
 	private List<Cuenta> cuentas;
@@ -35,7 +35,7 @@ public class TipoCuenta implements Serializable{
 		
 	}
 
-	public TipoCuenta(Long idTipoCuenta, String nombre, Long descripcion, List<Cuenta> cuentas) {
+	public TipoCuenta(Long idTipoCuenta, String nombre, String descripcion, List<Cuenta> cuentas) {
 		super();
 		this.idTipoCuenta = idTipoCuenta;
 		this.nombre = nombre;
@@ -59,11 +59,11 @@ public class TipoCuenta implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Long getDescripcion() {
+	public String getDescripcion() {
 		return descripcion;
 	}
 
-	public void setDescripcion(Long descripcion) {
+	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 

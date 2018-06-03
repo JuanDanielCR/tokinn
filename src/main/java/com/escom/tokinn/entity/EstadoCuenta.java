@@ -7,9 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +21,8 @@ public class EstadoCuenta implements Serializable{
 	private static final long serialVersionUID = -8039392082856829040L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name = "t04_estado_seq", sequenceName = "t04_estado_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "t04_estado_seq")
 	@Column(name="id_estado_cuenta")
 	private Long idEstadoCuenta;
 	

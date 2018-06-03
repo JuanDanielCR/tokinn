@@ -7,9 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +21,8 @@ public class Transaccion implements Serializable{
 	private static final long serialVersionUID = -1541223548494871380L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name = "t03_transaccion_seq", sequenceName = "t03_transaccion_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "t03_transaccion_seq")
 	@Column(name="id_transaccion")
 	private Long idTransaccion;
 	

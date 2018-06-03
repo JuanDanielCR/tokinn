@@ -26,15 +26,15 @@ public class TipoTransaccion implements Serializable {
 	private String nombre;
 	
 	@Column(name="descripcion")
-	private Long descripcion;
+	private String descripcion;
 
 	@OneToMany(mappedBy = "tipoTransaccion", fetch=FetchType.EAGER)
 	private List<Transaccion> transacciones;
 	
 	public TipoTransaccion() {
 	}
-	
-	public TipoTransaccion(Long idTipoTransaccion, String nombre, Long descripcion, List<Transaccion> transacciones) {
+
+	public TipoTransaccion(Long idTipoTransaccion, String nombre, String descripcion, List<Transaccion> transacciones) {
 		super();
 		this.idTipoTransaccion = idTipoTransaccion;
 		this.nombre = nombre;
@@ -66,12 +66,11 @@ public class TipoTransaccion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Long getDescripcion() {
+	public String getDescripcion() {
 		return descripcion;
 	}
 
-	public void setDescripcion(Long descripcion) {
+	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
 }

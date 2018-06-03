@@ -30,9 +30,7 @@
 	        <div class="alert alert-success" th:if="${success != null}">
 	            ¡Registro exitoso, ahora puedes iniciar sesión!
 	        </div>
-	        <div class="alert alert-success" id="token-activated" style="display:none;">
-	        	¡Cuenta válida ingrese los siguientes datos!
-	        </div>
+	        <div class="alert" id="respuesta_ajax" style="display:none;"></div>
             <div class="col-md-6">
                 <h2 class="font-bold">Bienvenido a BBWA Bankito</h2>
                 <br/>
@@ -49,18 +47,24 @@
             </div>
             <div class="col-md-6">
                 <div class="ibox-content">
-                    <form id="cuentaForm" class="m-t" role="form">
+                    <form id="cuentaForm" name="formLogin" class="m-t" role="form">
                         <div class="form-group">
-                            <input class="form-control" id="numeroTarjeta" placeholder="Numero de tarjeta" required="">
+                            <input class="form-control" name="numeroTarjeta" id="numeroTarjeta" placeholder="Numero de tarjeta">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" id="cvv" placeholder="CVV" required="">
+                            <input class="form-control" name="cvv" id="cvv" placeholder="CVV" >
                         </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b" onclick="login2()">Next</button>
+                        <div class="form-group" id="password" >
+                            <input type="password" name="password" class="form-control" placeholder="Password" >
+                        </div>
+                        <div class="form-group" id="token">
+                            <input class="form-control" name="token" id="token" placeholder="Token" disabled>
+                            <label id="nota_token">Habilita esta función en tu panel de control.</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary block full-width m-b">Entrar</button>
                         <a href="#">
                             <small>¿Olvidaste tu contraseña?</small>
                         </a>
-
                         <p class="text-muted text-center">
                             <small>¿No tienes cuenta?</small>
                         </p>
@@ -80,46 +84,12 @@
         </div>
     </div>
   </div>
-
-  <div class="w3-card" id="login2" style="display:none;">
-    <div class="loginColumns animated fadeInDown">
-        <div class="row">
-
-            <div class="col-md-6">
-                <h2 class="font-bold">Bienvenido a BBWA Bankito</h2>
-                <img th:src="@{/img/Tokinn.jpg}" class="img-responsive">
-            </div>
-            <div class="col-md-6">
-                <div class="ibox-content">
-                    <form class="m-t" role="form" action="index.html">
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" required="">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Tokinn de inicio de sesión" required="">
-                        </div>
-                        <button type="submit" class="btn btn-primary block full-width m-b" onclick="login2()">Login</button>
-                        <a href="#">
-                            <small>¿Olvidaste tu contraseña?</small>
-                        </a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-6">
-                Copyright BBWA Bankito
-            </div>
-            <div class="col-md-6 text-right">
-               <small>© 2018</small>
-            </div>
-        </div>
-    </div>
-  </div>
-
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
 <script>
 $( document ).ready(function() {
+	$("#password").hide();
+	$("#token").hide();
+	$("#nota_token").hide();
     $("#cuentaForm").submit(function(event) {
 		event.preventDefault();
 		ajaxPost();
@@ -134,23 +104,33 @@ $( document ).ready(function() {
     	$.ajax({
 			type : "POST",
 			contentType : "application/json",
-			url : window.location + "api/login",
+			url : "/api/login",
 			data : JSON.stringify(formData),
 			dataType : 'json',
 			success : function(result) {
+				$("#respuesta_ajax").empty();
+				$("#respuesta_ajax").removeClass();
 				if(result.status == "Done"){
-					var log2 = document.getElementById("login2");
-					var msg = document.getElementById("token-activated");
-					log2.style.display=block;
-					msg.style.display=block;
-					console.log("id: "+result.data.id);
+					$("#password").show();
+					$("#token").show();
+					if(result.data.hasToken == null || resutl.data.hasToken == false){
+						$("#nota_token").show();
+					}else{
+						$("#token").prop('disabled', false);
+					}
+					$("#respuesta_ajax").append( "<p>Datos correctos, por favor ingresa tu información en los campos vacíos</p>" );
+					$("#respuesta_ajax").addClass("alert alert-success");
 				}else{
-					
+					$("#password").hide();
+					$("#token").hide();
+					$("#nota_token").hide();
+					$("#respuesta_ajax").append( "<p>Datos incorrectos, intente de nuevo</p>" );
+					$("#respuesta_ajax").addClass("alert alert-danger");
 				}
-				console.log(result);
+				$("#respuesta_ajax").show();
 			},
 			error : function(e) {
-				alert("Error!")
+				alert("!Oh, algo salió mal, intenta más tarde!")
 				console.log("ERROR: ", e);
 			}
 		});
