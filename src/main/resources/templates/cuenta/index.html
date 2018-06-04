@@ -34,25 +34,25 @@
                       </div>
                   </li>
                   <li>
-                      <a href="/usuario/index"><i class="fa fa-th-large"></i><span>Index</span></a>
+                      <a href="#"><i class="fa fa-th-large"></i><span>Index</span></a>
                   </li>
                   <li>
-                      <a href="/usuario/view"><i class="fa fa-user"></i> <span class="nav-label">Información del usuario</span></a>
+                      <a href="#"><i class="fa fa-file-text"></i> <span class="nav-label">Estado de cuentas</span></a>
                   </li>
                   <li>
-<!-- ES ESTE -->     <a href="#"><i class="fa fa-file-text"></i> <span class="nav-label">Estado de cuentas</span></a>
+                      <a href="#"><i class="fa fa-file-text"></i> <span class="nav-label">Simulación de vulnerabilidad</span></a>
                   </li>
                   <li>
-                      <a href="test"><i class="fa fa-file-text"></i> <span class="nav-label">Simulación de vulnerabilidad</span></a>
+                      <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Pagos</span></a>
                   </li>
                   <li>
-                      <a href="pagos"><i class="fa fa-credit-card"></i> <span class="nav-label">Pagos</span></a>
+                      <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Inversiones</span></a>
                   </li>
                   <li>
-                      <a href="/tokinn/afores"><i class="fa fa-line-chart"></i> <span class="nav-label">Inversiones</span></a>
+                      <a href="#"><i class="fa fa-blind"></i> <span class="nav-label">Afores</span></a>
                   </li>
                   <li>
-                      <a href="/tokinn/afores"><i class="fa fa-blind"></i> <span class="nav-label">Afores</span></a>
+                      <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Gestionar cuentas</span></a>
                   </li>
 
               </ul>
@@ -136,20 +136,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><div><strong>COMPRA EN TOTAL PLAY CR</strong></div>
-                                        <td>1</td>
-                                        <td>$459.00 MN</td>
+                                    <tr th:each="transacciones : ${transacciones}">
+                                        <td th:text="${transacciones.descripcion}"><div><strong></strong></div>
+                                        <td th:text="${transacciones.cantidad}"></td>
+                                        <td th:text="${transacciones.precioUnitario}">$</td>
                                         <td>$0.00 MN</td>
-                                        <td>$459.00 MN</td>
+                                        <td th:text="${transacciones.amount}">$</td>
                                     </tr>
                                     <tr>
-                                        <td><div><strong>COMPRA EN NETFLIX</strong></div>
-                                        <td>1</td>
-                                        <td>$199.00 MN</td>
-                                        <td>$0.00 MN</td>
-                                        <td>$199.00 MN</td>
-                                    </tr>
+                                    	<td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td><strong>TOTAL: </strong></td>
+	                                    <td th:text="${amount}"></td>
+	                                </tr>
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
