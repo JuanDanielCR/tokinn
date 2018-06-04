@@ -136,20 +136,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><div><strong>COMPRA EN TOTAL PLAY CR</strong></div>
-                                        <td>1</td>
-                                        <td>$459.00 MN</td>
+                                    <tr th:each="transacciones : ${transacciones}">
+                                        <td th:text="${transacciones.descripcion}"><div><strong></strong></div>
+                                        <td th:text="${transacciones.cantidad}"></td>
+                                        <td th:text="${transacciones.precioUnitario}">$</td>
                                         <td>$0.00 MN</td>
-                                        <td>$459.00 MN</td>
+                                        <td th:text="${transacciones.amount}">$</td>
                                     </tr>
                                     <tr>
-                                        <td><div><strong>COMPRA EN NETFLIX</strong></div>
-                                        <td>1</td>
-                                        <td>$199.00 MN</td>
-                                        <td>$0.00 MN</td>
-                                        <td>$199.00 MN</td>
-                                    </tr>
+                                    	<td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td><strong>TOTAL: </strong></td>
+	                                    <td th:text="${amount}"></td>
+	                                </tr>
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
