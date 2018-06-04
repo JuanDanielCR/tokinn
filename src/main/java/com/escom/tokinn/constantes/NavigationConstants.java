@@ -13,11 +13,13 @@ public class NavigationConstants {
 	public static final String USUARIO_ADD = "/usuario/registrar";
 	public static final String USUARIO_EDIT = "/usuario/editar";
 	public static final String USUARIO_PASSWORD = "/usuario/password";
+	public static final String USUARIO_VIEW = "/usuario/view";
 	
 	//Cuenta
 	public static final String CUENTA_ADD = "/cuenta/registrar";
 	public static final String CUENTA_INDEX = "/cuenta/index";
 	public static final String CUENTA_VULNERABILIDAD = "/cuenta/vulnerabilidad";
+	public static final String CUENTA_PAGOS = "/cuenta/pagos";
 	
 	//Transaccion
 	public static final String TRANSACCION_ADD = "/transaccion/registrar";
