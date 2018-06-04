@@ -105,11 +105,7 @@ public class MessengerController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<String> verifyWebhook(@RequestParam(MODE_REQUEST_PARAM_NAME) final String mode,
                                                 @RequestParam(VERIFY_TOKEN_REQUEST_PARAM_NAME) final String verifyToken,
-                                                @RequestParam(CHALLENGE_REQUEST_PARAM_NAME) final String challenge,
-                                                ModelMap session) {
-    	Usuario usuario = (Usuario) session.get("userData");
-    	fbId = usuario.getIdFacebook();
-    	System.out.println("Facebook Id: "+fbId);
+                                                @RequestParam(CHALLENGE_REQUEST_PARAM_NAME) final String challenge) {
         logger.debug("Received Webhook verification request - mode: "+mode+" | verifyToken: "+verifyToken+" | challenge: "+challenge);
         try {
             return ResponseEntity.ok(this.receiveClient.verifyWebhook(mode, verifyToken, challenge));
@@ -124,8 +120,11 @@ public class MessengerController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> handleCallback(@RequestBody final String payload,
-                                               @RequestHeader(SIGNATURE_HEADER_NAME) final String signature) {
-
+                                               @RequestHeader(SIGNATURE_HEADER_NAME) final String signature,
+                                               ModelMap session) {
+    	Usuario usuario = (Usuario) session.get("userData");
+    	fbId = usuario.getIdFacebook();
+    	System.out.println("Facebook Id: "+fbId);
         logger.debug("Received Messenger Platform callback - payload: "+payload+" | signature: "+ signature);
         try {
             this.receiveClient.processCallbackPayload(payload, signature);
