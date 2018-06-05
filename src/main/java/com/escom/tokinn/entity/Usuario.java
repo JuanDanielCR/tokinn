@@ -28,6 +28,9 @@ public class Usuario implements Serializable{
 	@Column(name="id_facebook")
 	private String idFacebook;
 	
+	@Column(name="id_messenger")
+	private String idMessenger;
+	
 	@Column(name="pass")
 	private String password;
 	
