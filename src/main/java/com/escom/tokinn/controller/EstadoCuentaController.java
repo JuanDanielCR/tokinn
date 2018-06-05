@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
+import com.escom.tokinn.services.EstadoCuentaService;
 import com.escom.tokinn.services.TransaccionService;
 import com.escom.tokinn.services.UsuarioService;
 
@@ -46,6 +48,10 @@ public class EstadoCuentaController {
 	@Qualifier("transaccionService")
 	private TransaccionService transaccionService;
 	
+	@Autowired
+	@Qualifier("estadoCuentaService")
+	private EstadoCuentaService estadoCuentaService;
+	
 	@GetMapping("/reportePDF")
 	public @ResponseBody void productPDF(HttpServletResponse response) {
 		try {
@@ -61,7 +67,9 @@ public class EstadoCuentaController {
 			
 			parameterMap.put("datasource",jRDataSource);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameterMap, jRDataSource);
+			
 			System.out.println("---Fill report");
+			
 			response.setContentType("application/x-pdf");
 			response.setHeader("Content-Disposition","inline; filename=\"report.pdf\"");
 			final OutputStream outputStream = response.getOutputStream();
@@ -75,7 +83,7 @@ public class EstadoCuentaController {
 	}
 	
 	@GetMapping("/reporte")
-	public @ResponseBody void transactionPDF(HttpServletResponse response) {
+	public @ResponseBody void transactionPDF(HttpServletResponse response, ModelMap session) {
 		try {
 			InputStream  jasperStream  = this.getClass().getResourceAsStream("/jasperreports/reports/transaccion.jrxml");
 			JasperDesign design = JRXmlLoader.load(jasperStream);
@@ -88,9 +96,10 @@ public class EstadoCuentaController {
 			
 			parameterMap.put("datasource",jRDataSource);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameterMap, jRDataSource);
-			
 			byte[] output = JasperExportManager.exportReportToPdf(jasperPrint);
-			transaccionService.firmarEstadoDeCuenta("$2a$10$Ly2lrYkyz", output);
+			
+			Usuario usuario = (Usuario) session.get("userData");
+			estadoCuentaService.firmarEstadoDeCuenta(usuario, output);
 			
 			response.setContentType("application/x-pdf");
 			response.setHeader("Content-Disposition","inline; filename=\"report.pdf\"");
