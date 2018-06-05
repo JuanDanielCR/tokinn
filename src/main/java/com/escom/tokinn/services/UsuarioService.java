@@ -90,8 +90,15 @@ public class UsuarioService {
 		return Boolean.TRUE;
 	}
 	
-	public Boolean vincularIdMessenger(String tokenVinculacion) {
-		
+	public Boolean vincularIdMessenger(String tokenVinculacion, String idMessenger) {
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		for(Usuario usuarioActual : usuarios) {
+			if(usuarioActual.getIdFacebook() != null && tokenService.getHash(usuarioActual.getIdFacebook()).equals(tokenVinculacion)) {
+				usuarioActual.setIdMessenger(idMessenger);
+				usuarioRepository.save(usuarioActual);
+				break;
+			}
+		}
 		return Boolean.TRUE;
 	}
 }

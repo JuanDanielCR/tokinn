@@ -28,6 +28,9 @@ public class Usuario implements Serializable{
 	@Column(name="id_facebook")
 	private String idFacebook;
 	
+	@Column(name="id_messenger")
+	private String idMessenger;
+	
 	@Column(name="pass")
 	private String password;
 	
@@ -163,6 +166,14 @@ public class Usuario implements Serializable{
 
 	public void setHasToken(Boolean hasToken) {
 		this.hasToken = hasToken;
+	}
+
+	public String getIdMessenger() {
+		return idMessenger;
+	}
+
+	public void setIdMessenger(String idMessenger) {
+		this.idMessenger = idMessenger;
 	}
 	
 }

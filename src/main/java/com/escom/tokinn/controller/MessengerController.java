@@ -159,7 +159,7 @@ public class MessengerController {
             System.out.println("messageId: "+messageId+" senderId: "+senderId+" received messageText: "+messageText+" at: "+timestamp);
             try {
             	if(messageText.startsWith("vink_")) {
-            		if(usuarioService.vincularIdMessenger(messageText.substring(5))) {
+            		if(usuarioService.vincularIdMessenger(messageText.substring(5), event.getSender().getId())) {
             			sendTextMessage(senderId, Bundle.MSG_VINCULACION);
             		}else{
             			sendTextMessage(senderId, Bundle.MSG_ERROR_VINCULACION);
