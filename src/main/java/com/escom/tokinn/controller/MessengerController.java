@@ -5,9 +5,10 @@ import static com.github.messenger4j.MessengerPlatform.MODE_REQUEST_PARAM_NAME;
 import static com.github.messenger4j.MessengerPlatform.SIGNATURE_HEADER_NAME;
 import static com.github.messenger4j.MessengerPlatform.VERIFY_TOKEN_REQUEST_PARAM_NAME;
 
+import com.escom.tokinn.constantes.Bundle;
 import com.escom.tokinn.constantes.NavigationConstants;
-import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.services.TokenService;
+import com.escom.tokinn.services.UsuarioService;
 import com.github.messenger4j.MessengerPlatform;
 import com.github.messenger4j.exceptions.MessengerApiException;
 import com.github.messenger4j.exceptions.MessengerIOException;
@@ -46,7 +47,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +63,10 @@ public class MessengerController {
 	@Autowired
 	@Qualifier("tokenService")
 	private TokenService tokenService;
+	
+	@Autowired
+	@Qualifier("usuarioService")
+	private UsuarioService usuarioService;
 	
 	private static final String RESOURCE_URL = "https://raw.githubusercontent.com/fbsamples/messenger-platform-samples/master/node/public";
 	private static final Log logger = LogFactory.getLog(MessengerController.class);
@@ -120,11 +124,7 @@ public class MessengerController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> handleCallback(@RequestBody final String payload,
-                                               @RequestHeader(SIGNATURE_HEADER_NAME) final String signature,
-                                               ModelMap session) {
-    	Usuario usuario = (Usuario) session.get("userData");
-    	fbId = usuario.getIdFacebook();
-    	System.out.println("Facebook Id: "+fbId);
+                                               @RequestHeader(SIGNATURE_HEADER_NAME) final String signature) {
         logger.debug("Received Messenger Platform callback - payload: "+payload+" | signature: "+ signature);
         try {
             this.receiveClient.processCallbackPayload(payload, signature);
@@ -158,7 +158,14 @@ public class MessengerController {
             final Date timestamp = event.getTimestamp();
             System.out.println("messageId: "+messageId+" senderId: "+senderId+" received messageText: "+messageText+" at: "+timestamp);
             try {
-                switch (messageText.toLowerCase()) {
+            	if(messageText.startsWith("vink_")) {
+            		if(usuarioService.vincularIdMessenger(messageText.substring(5))) {
+            			sendTextMessage(senderId, Bundle.MSG_VINCULACION);
+            		}else{
+            			sendTextMessage(senderId, Bundle.MSG_ERROR_VINCULACION);
+            		}
+            	}else {
+            		switch (messageText.toLowerCase()) {
 	                case "token_inicio":
 	                    sendTokenMessage(senderId, messageText, NavigationConstants.TOKEN_INICIO);
 	                    break;
@@ -206,7 +213,9 @@ public class MessengerController {
                         break;
                     default:
                         sendTextMessage(senderId, messageText);
-                }
+            		}
+            	}
+                
             } catch (MessengerApiException | MessengerIOException e) {
                 handleSendException(e);
             }

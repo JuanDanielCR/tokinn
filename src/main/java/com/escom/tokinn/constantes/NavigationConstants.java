@@ -7,6 +7,7 @@ public class NavigationConstants {
 	public static final String INVERSIONES_VIEW = "/tokinn/inversiones";
 	public static final String AFORES_VIEW = "/tokinn/afores";
 	public static final String BASE_VIEW = "/tokinn/base";
+	public static final String VINCULACION = "/tokinn/vinculacion";
 
 	//Usuario
 	public static final String USUARIO_INDEX = "/usuario/index";

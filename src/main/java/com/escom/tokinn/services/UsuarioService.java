@@ -56,8 +56,10 @@ public class UsuarioService {
 	}
 	
 	public Respuesta<Usuario> verificarLogin(UsuarioModel model) {
+		System.out.println("pass: "+model.getPassword()+" id: "+model.getId());
 		Respuesta<Usuario> respuesta = new Respuesta<Usuario>();
 		Usuario entidad = usuarioRepository.findByIdUsuarioAndPassword(model.getId(), model.getPassword());
+		System.out.println("enitdad: "+entidad);
 		if(entidad != null) {
 			respuesta.setEntidad(entidad);
 			//Tiene token activado
@@ -82,5 +84,14 @@ public class UsuarioService {
 		respuesta.setEntidad(usuario);
 		respuesta.setCodigoRespuesta(CodigoRespuesta.OK);
 		return respuesta;
+	}
+	
+	public Boolean isBotHabilitado() {
+		return Boolean.TRUE;
+	}
+	
+	public Boolean vincularIdMessenger(String tokenVinculacion) {
+		
+		return Boolean.TRUE;
 	}
 }

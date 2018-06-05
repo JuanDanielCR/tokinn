@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.escom.tokinn.constantes.Constantes;
+import com.escom.tokinn.constantes.NavigationConstants;
 import com.escom.tokinn.converter.UsuarioConverter;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.UsuarioModel;
@@ -30,43 +29,43 @@ public class UsuarioController {
 	
 	@GetMapping("/index")
 	public ModelAndView gestionar() {
-		return new ModelAndView(Constantes.USUARIO_INDEX);
+		return new ModelAndView(NavigationConstants.USUARIO_INDEX);
 	}
 	
 	@GetMapping("/view")
 	public ModelAndView showview() {
-		return new ModelAndView(Constantes.USUARIO_VIEW);
+		return new ModelAndView(NavigationConstants.USUARIO_VIEW);
 	}		
 	
 	@GetMapping("/registro")
 	public ModelAndView registrar(Model model, @RequestParam(name="error", required=false)String error) {
 		model.addAttribute("usuario", new UsuarioModel());
 		model.addAttribute("error",error);
-		return new ModelAndView(Constantes.USUARIO_ADD);
+		return new ModelAndView(NavigationConstants.USUARIO_ADD);
 	}
 	
 	@PostMapping("registro")
 	public String registrar(@ModelAttribute("usuario") UsuarioModel model) {
-		String redirect = Constantes.LANDING_VIEW;
+		String redirect = NavigationConstants.LANDING_VIEW;
 		Usuario entidad = usuarioConverter.modelToEntity(model);
 		entidad = usuarioService.registrarUsuario(entidad);
 		if(entidad != null) {
 			//Registro exitoso
-			redirect = Constantes.LOGIN_VIEW+"?success=true";
+			redirect = NavigationConstants.LOGIN_VIEW+"?success=true";
 		} else {
 			//Error
-			redirect = Constantes.USUARIO_ADD+"?error=true";
+			redirect = NavigationConstants.USUARIO_ADD+"?error=true";
 		}
 		return "redirect:"+redirect;
 	}
 	
 	@GetMapping("/editar")
 	public ModelAndView editar() {
-		return new ModelAndView(Constantes.USUARIO_EDIT);
+		return new ModelAndView(NavigationConstants.USUARIO_EDIT);
 	}
 	
 	@GetMapping("/password")
 	public ModelAndView password() {
-		return new ModelAndView(Constantes.USUARIO_PASSWORD);
+		return new ModelAndView(NavigationConstants.USUARIO_PASSWORD);
 	}
 }

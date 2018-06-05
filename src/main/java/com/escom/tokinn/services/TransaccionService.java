@@ -25,6 +25,10 @@ public class TransaccionService {
 		return transaccionRepository.findAll();
 	}
 	
+	public List<Transaccion> findAll(){
+		return transaccionRepository.findAll();
+	}
+	
 	public OutputStream firmarEstadoDeCuenta(String passwordUsuario, byte[] bytesArchivo) {
 		try {
 			HMAC firma = hmacService.signFile(passwordUsuario, "", bytesArchivo);
