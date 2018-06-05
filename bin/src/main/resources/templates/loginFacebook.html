@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Tokinn Facebook</title>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/toastr/toastr.min.css}" rel="stylesheet" />
+<link th:href="@{/js/plugins/gritter/jquery.gritter.css}"
+	rel="stylesheet" />
+<link th:href="@{/css/animate.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Menu lateral -->
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav metismenu" id="side-menu">
+					<li class="nav-header">
+						<div class="dropdown profile-element">
+							<span> <img alt="image" class="img-circle"
+								src="img/profile_small.jpg" />
+							</span> <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<span class="clear"> <span class="block m-t-xs"> <strong
+										class="font-bold" th:text="${nombre}"></strong>
+								</span> <span class="text-muted text-xs block">Usuario Normal <b
+										class="caret"></b></span>
+							</span>
+							</a>
+							<ul class="dropdown-menu animated fadeInRight m-t-xs">
+								<li><a href="/perfil/consulta">Mi Perfil</a></li>
+								<li><a href="/perfil/cuenta">Cuenta</a></li>
+								<li class="divider"></li>
+							</ul>
+						</div>
+						<div class="logo-element">Tokinn</div>
+					</li>
+					<li><a href="#"><i class="fa fa-user-circle-o"></i> <span
+							class="nav-label">Explorar</span> <span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+							<li><a href="/plantilla/populares">Populares</a></li>
+							<li><a href="/plantilla/recomendadas">Recomendadas</a></li>
+							<li><a href="/plantilla/categorias">Categorías</a></li>
+						</ul></li>
+					<li><a href="#"><i class="fa fa-bar-chart-o"></i> <span
+							class="nav-label">Mis Plantillas</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="/plantilla/consulta">Ver Plantillas</a></li>
+							<li><a href="/plantilla/agregar">Crear Plantilla</a></li>
+						</ul></li>
+					<li><a href="/resultados/historial"><i
+							class="fa fa-diamond"></i> <span class="nav-label">Historial
+								de Resultados</span></a></li>
+					<li><a href="#"><i class="fa fa-bar-chart-o"></i> <span
+							class="nav-label">Mis Compras</span><span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li><a href="/pagos/agregar">Agregar Método de Pago</a></li>
+							<li><a href="/pagos/metodos">Ver Métodos de Pago</a></li>
+							<li><a href="/resultados/historial">Historial de Compras</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- Menu lateral -->
+		<!-- Menu abajo -->
+		<div id="page-wrapper" class="gray-bg dashbard-1">
+			<div class="row border-bottom">
+				<nav class="navbar navbar-static-top" role="navigation"
+					style="margin-bottom: 0">
+					<div class="navbar-header">
+						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+							href="#"><i class="fa fa-bars"></i> </a>
+						<form role="search" class="navbar-form-custom"
+							action="search_results.html">
+							<div class="form-group">
+								<input type="text" placeholder="Buscar..." class="form-control"
+									name="top-search" id="top-search" />
+							</div>
+						</form>
+					</div>
+					<ul class="nav navbar-top-links navbar-right">
+						<li><span class="m-r-sm text-muted welcome-message">Tokinn</span>
+						</li>
+						<li class="dropdown"><a class="dropdown-toggle count-info"
+							data-toggle="dropdown" href="#"> <i class="fa fa-bell"></i> <span
+								class="label label-primary">3</span>
+						</a>
+							<ul class="dropdown-menu dropdown-alerts">
+								<li><a href="notificacion.html">
+										<div>
+											<i class="fa fa-check-circle-o"></i> Tu plantilla1 ha sido
+											publicada <span class="pull-right text-muted small">
+												hace 10 minutos</span>
+										</div>
+								</a></li>
+								<li class="divider"></li>
+								<li>
+									<div class="text-center link-block">
+										<a href="notification.html"> <strong>Ver todas
+												las notificaciones</strong> <i class="fa fa-angle-right"></i>
+										</a>
+									</div>
+								</li>
+							</ul></li>
+						<li>
+							<form th:action="@{/tokinn/logout}" method="POST">
+								<input type="submit" class="btn btn-success" value="Salir" />
+							</form>
+						</li>
+					</ul>
+				</nav>
+				<!-- menu arriba -->
+				<div class="row  border-bottom white-bg dashboard-header">
+					<a id="btnFacebook" href="/usuario/index"> Felicidades activaste el Login con FB</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	<script th:src="@{/js/plugins/flot/jquery.flot.js}"></script>
+	<script th:src="@{/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+	<script th:src="@{/js/plugins/flot/jquery.flot.spline.js}"></script>
+	<script th:src="@{/js/plugins/flot/jquery.flot.resize.js}"></script>
+	<script th:src="@{/js/plugins/flot/jquery.flot.pie.js}"></script>
+	<script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+	<script th:src="@{/js/demo/peity-demo.js}"></script>
+	<script th:src="@{/js/inspinia.js}"></script>
+	<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+	<script th:src="@{/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+	<script th:src="@{/js/plugins/gritter/jquery.gritter.min.js}"></script>
+	<script th:src="@{/js/plugins/sparkline/jquery.sparkline.min.js}"></script>
+	<script th:src="@{/js/plugins/chartJs/Chart.min.js}"></script>
+	<script th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+	
+	<script>
+	var idFacebook = "";
+	$.get("/user", function(data){
+		idFacebook = data.userAuthentication.details.id;
+		console.log("id: "+data.userAuthentication.details.id);
+		console.log("client_id: "+data.userAuthentication.details.clientid);
+		console.log("data:"+JSON.stringify(data));
+	});
+	
+	$("#btnFacebook").click(function(event) {
+		event.preventDefault();
+		ajaxPost();
+	});
+    function ajaxPost(){
+    	var formData = {
+    		idUsuario : $("#idUser").text(),
+    		idFacebook :  idFacebook
+    	}
+    	$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : "/api/fb_data",
+			data : JSON.stringify(formData),
+			dataType : 'json',
+			success : function(result) {
+				if(result.status == "Done"){
+					console.log("exito");
+					$(location).attr("href", "http://localhost:8080/usuario/index"); 
+				}else{
+					console.log("error");
+				}
+			},
+			error : function(e) {
+				alert("!Oh, algo salió mal, intenta más tarde!")
+				console.log("ERROR: ", e);
+			}
+		});
+    }
+	</script>
+</body>
+</html>

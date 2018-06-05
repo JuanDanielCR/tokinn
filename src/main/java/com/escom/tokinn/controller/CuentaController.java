@@ -6,16 +6,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.constantes.NumerosConstantes;
 import com.escom.tokinn.converter.TransaccionConverter;
+import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Transaccion;
+import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.TransaccionModel;
 import com.escom.tokinn.model.UsuarioModel;
 import com.escom.tokinn.services.CuentaService;
@@ -44,16 +49,18 @@ public class CuentaController {
 	
 	@GetMapping("/gestion")
 	public ModelAndView gestionar(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
-		ModelAndView mav = new ModelAndView();
-		List<TransaccionModel> transacciones = new ArrayList<>();
-		TransaccionModel transaccionModel;
 		Double amount = 0.0;
-		for(Transaccion transaccion : transaccionService.findTransacciones()) {
-			transaccionModel = new TransaccionModel();
-			transaccionModel = transaccionConverter.entityToModel(transaccion);
-			transacciones.add(transaccionModel);
+		Usuario usuario = (Usuario) session.get("userData");
+		System.out.println("Usuario: "+usuario.getNombre());
+		System.out.println("Vamos bien");
+		for(Cuenta cuenta : usuario.getCuentas()) {
+			System.out.println("Cuenta: "+cuenta.getNumeroCuenta());
+		}
+		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
+		for(TransaccionModel transaccion : transacciones) {
 			amount+=transaccion.getAmount();
 		}
+		ModelAndView mav = new ModelAndView();
 		mav.setViewName(NavigationConstants.CUENTA_INDEX);
 		mav.addObject("amount", amount);
 		mav.addObject("transacciones",transacciones);
@@ -61,7 +68,26 @@ public class CuentaController {
 	}
 	
 	@GetMapping("/test")
-	public ModelAndView test() {
+	public ModelAndView test(Model model, ModelMap session) {
+		model.addAttribute("transaccionModel", new TransaccionModel());
+		Usuario usuario = (Usuario) session.get("userData");
+		System.out.println("Usuario: "+usuario.getNombre());
+		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(NavigationConstants.CUENTA_VULNERABILIDAD);
+		mav.addObject("transacciones",transacciones);
+		return mav;
+	}
+	
+	@PostMapping("test")
+	public ModelAndView edit(@ModelAttribute("transaccionModel") TransaccionModel model) {
+		Transaccion transaccion = transaccionConverter.modelToEntity(model);
+		transaccion = transaccionService.edit(transaccion);
+		if(transaccion != null) {
+			//Actualización exitosa
+		} else {
+			//Actualizacion Fallida
+		}
 		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
 	

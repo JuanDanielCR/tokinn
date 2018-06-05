@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
+import com.escom.tokinn.model.TransaccionModel;
 import com.escom.tokinn.services.EstadoCuentaService;
 import com.escom.tokinn.services.TransaccionService;
 import com.escom.tokinn.services.UsuarioService;
@@ -91,7 +92,7 @@ public class EstadoCuentaController {
 			
 			Map<String, Object> parameterMap = new HashMap<>();
 		
-			List<Transaccion> transacciones = transaccionService.findTransacciones();
+			List<TransaccionModel> transacciones = transaccionService.findAll();
 			JRDataSource jRDataSource = new JRBeanCollectionDataSource(transacciones);
 			
 			parameterMap.put("datasource",jRDataSource);
