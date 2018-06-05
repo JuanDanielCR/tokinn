@@ -71,14 +71,14 @@
                       <span class="m-r-sm text-muted welcome-message">Bienvenido a BBWA Bankito</span>
                   </li>
                   <li>
-                    <a href="login.html">
-                        <i class="fa fa-facebook"></i> Habilitar token con FB
-                    </a>
+                    <a href="/login/facebook">
+                      <i class="fa fa-facebook"></i> Habilitar token con FB
+                  </a>
                   </li>
                   <li>
-                      <a href="login.html">
-                          <i class="fa fa-sign-out"></i> Log out
-                      </a>
+                      <form th:action="@{/tokinn/logout}" method="POST">
+						<input type="submit" class="btn btn-success" value="Salir" />
+					</form>
                   </li>
               </ul>
           </nav>

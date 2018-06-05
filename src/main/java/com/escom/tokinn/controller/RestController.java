@@ -49,12 +49,10 @@ public class RestController {
 	public Response postFacebookLogin(@RequestBody FacebookModel model, ModelMap session) {
 		Response response;
 		Usuario usuario = (Usuario) session.get("userData");
-		System.out.println("ID antes: "+usuario.getIdFacebook());
 		Respuesta<Usuario> respuesta = usuarioService.guardarAutenticacionFacebook(usuario, model.getIdFacebook());
 		if(respuesta.getCodigoRespuesta() == CodigoRespuesta.OK) {
 			UsuarioModel usuarioModel = usuarioConverter.entityToModel(respuesta.getEntidad());
 			response = new Response("Done", usuarioModel);
-			System.out.println("ID despues: "+respuesta.getEntidad().getIdFacebook());
 		}else {
 			response = new Response("Error", new UsuarioModel());
 		}

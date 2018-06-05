@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>Base Sally</title>
+<title>Tokinn Facebook</title>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 <link th:href="@{/css/plugins/toastr/toastr.min.css}" rel="stylesheet" />
@@ -36,7 +36,7 @@
 								<li class="divider"></li>
 							</ul>
 						</div>
-						<div class="logo-element">Sally</div>
+						<div class="logo-element">Tokinn</div>
 					</li>
 					<li><a href="#"><i class="fa fa-user-circle-o"></i> <span
 							class="nav-label">Explorar</span> <span class="fa arrow"></span></a>
@@ -82,7 +82,7 @@
 						</form>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><span class="m-r-sm text-muted welcome-message">Sally</span>
+						<li><span class="m-r-sm text-muted welcome-message">Tokinn</span>
 						</li>
 						<li class="dropdown"><a class="dropdown-toggle count-info"
 							data-toggle="dropdown" href="#"> <i class="fa fa-bell"></i> <span
@@ -106,7 +106,7 @@
 								</li>
 							</ul></li>
 						<li>
-							<form th:action="@{/sally/logout}" method="POST">
+							<form th:action="@{/tokinn/logout}" method="POST">
 								<input type="submit" class="btn btn-success" value="Salir" />
 							</form>
 						</li>
@@ -165,6 +165,7 @@
 			success : function(result) {
 				if(result.status == "Done"){
 					console.log("exito");
+					$(location).attr("href", "http://localhost:8080/usuario/index"); 
 				}else{
 					console.log("error");
 				}

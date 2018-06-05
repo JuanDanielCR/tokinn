@@ -1,7 +1,5 @@
 package com.escom.tokinn.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -40,7 +38,7 @@ public class LandingController {
 	
 	@GetMapping("/prueba")
 	public ModelAndView prueba() {
-		if(usuarioService.vincularIdMessenger("9EA47", "idMessenget")) {
+		if(usuarioService.vincularIdMessenger("9EA47", "idMessenger")) {
 			System.out.println("coool");
 		}else {
 			System.out.println("not cool");
@@ -77,19 +75,25 @@ public class LandingController {
 	
 	@PostMapping("/login")
 	public String login(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
-		String redirect = NavigationConstants.LOGIN_VIEW;
+		String redirect = "/tokinn/login";
 		System.out.println("model: "+model.getId());
 		Respuesta<Usuario> respuestaLogin = usuarioService.verificarLogin(model);
 		if(respuestaLogin.getCodigoRespuesta().equals(CodigoRespuesta.OK)) {
 			//Registro exitoso - Subir a session
 			userData = respuestaLogin.getEntidad();
 			session.put("userData", userData);
-			redirect = NavigationConstants.USUARIO_INDEX+"?success=true";
+			redirect = "/usuario/index?success=true";
 		} else {
 			//Error
-			redirect = NavigationConstants.LOGIN_VIEW+"?error=true";
+			redirect = "/tokinn/login?error=true";
 		}
 		return "redirect:"+redirect;
 	}
 	
+	@PostMapping("/logout")
+	public String logout(ModelMap session) {
+		String redirect = "/tokinn/landing";
+		session.clear();
+		return "redirect:"+redirect;
+	}
 }

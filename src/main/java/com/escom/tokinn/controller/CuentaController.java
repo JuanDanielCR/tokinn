@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.escom.tokinn.constantes.NavigationConstants;
 import com.escom.tokinn.converter.TransaccionConverter;
 import com.escom.tokinn.entity.Transaccion;
-import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.TransaccionModel;
 import com.escom.tokinn.model.UsuarioModel;
 import com.escom.tokinn.services.CuentaService;
@@ -55,7 +54,6 @@ public class CuentaController {
 			transacciones.add(transaccionModel);
 			amount+=transaccion.getAmount();
 		}
-		System.out.println("Usuario: "+model.getNombre());
 		mav.setViewName(NavigationConstants.CUENTA_INDEX);
 		mav.addObject("amount", amount);
 		mav.addObject("transacciones",transacciones);
@@ -65,5 +63,10 @@ public class CuentaController {
 	@GetMapping("/test")
 	public ModelAndView test() {
 		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
+	}
+	
+	@GetMapping("/pagos")
+	public ModelAndView inicio() {
+		return new ModelAndView(NavigationConstants.CUENTA_PAGOS);
 	}
 }

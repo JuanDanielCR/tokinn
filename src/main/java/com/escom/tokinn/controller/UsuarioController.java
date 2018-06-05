@@ -46,15 +46,15 @@ public class UsuarioController {
 	
 	@PostMapping("registro")
 	public String registrar(@ModelAttribute("usuario") UsuarioModel model) {
-		String redirect = NavigationConstants.LANDING_VIEW;
+		String redirect = "/tokinn/landing";
 		Usuario entidad = usuarioConverter.modelToEntity(model);
 		entidad = usuarioService.registrarUsuario(entidad);
 		if(entidad != null) {
 			//Registro exitoso
-			redirect = NavigationConstants.LOGIN_VIEW+"?success=true";
+			redirect = NavigationConstants.LOGIN_VIEW+"/tokinn/login?success=true";
 		} else {
 			//Error
-			redirect = NavigationConstants.USUARIO_ADD+"?error=true";
+			redirect = NavigationConstants.USUARIO_ADD+"/usuario/registro?error=true";
 		}
 		return "redirect:"+redirect;
 	}

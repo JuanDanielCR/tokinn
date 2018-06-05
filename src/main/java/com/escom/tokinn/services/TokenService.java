@@ -58,6 +58,9 @@ public class TokenService {
     Se manda el ID del usuario, se instancia el TIPO DE TOKEN y se manda el TOKEN RECIVIDO
     devuelve TRUE si es aceptado y un FALSE si no*/
     public boolean verifyToken(String id, String type, String token){
+    	if(token == null) {
+    		return false;
+    	}
         if(token.equals(generateToken(id,type,new Date()))){
             return true;
         }else if(token.equals(generateToken(id,type,addMinutes(new Date(),-2)))){

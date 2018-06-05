@@ -6,7 +6,7 @@ public class NavigationConstants {
 	public static final String LOGIN_VIEW = "login";
 	public static final String INVERSIONES_VIEW = "inversiones";
 	public static final String AFORES_VIEW = "afores";
-	public static final String BASE_VIEW = "base";
+	public static final String BASE_VIEW = "loginFacebook";
 	public static final String VINCULACION = "vinculacion";
 
 	//Usuario
