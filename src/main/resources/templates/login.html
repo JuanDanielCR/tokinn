@@ -58,7 +58,7 @@
                             <input type="password" name="password" th:value="${usuario.password}" class="form-control" placeholder="Password" >
                         </div>
                         <div class="form-group" id="token">
-                            <input class="form-control" name="token" th:value="${usuario.token}" id="token" placeholder="Token" disabled>
+                            <input type="text" class="form-control" id="token" name="token" th:value="${usuario.token}"  placeholder="Token" disabled>
                             <label id="nota_token">Habilita esta función en tu panel de control.</label>
                         </div>
                         <input type="text" id="id" name="id" th:value="${usuario.id}" class="form-control" >
@@ -110,15 +110,18 @@ $( document ).ready(function() {
 			data : JSON.stringify(formData),
 			dataType : 'json',
 			success : function(result) {
+				console.log(JSON.stringify(result))
 				$("#respuesta_ajax").empty();
 				$("#respuesta_ajax").removeClass();
 				if(result.status == "Done"){
 					$("#password").show();
 					$("#token").show();
-					if(result.data.hasToken == null || resutl.data.hasToken == false){
+					if(result.data.hasToken == null || result.data.hasToken == false || result.data.idMessenger == null){
+						console.log("aqui")
 						$("#nota_token").show();
 					}else{
-						$("#token").prop('disabled', false);
+						console.log("abajo")
+						$(".form-control").prop( "disabled", false );
 					}
 					$("#respuesta_ajax").append( "<p>Datos correctos, por favor ingresa tu información en los campos vacíos</p>" );
 					$("#respuesta_ajax").addClass("alert alert-success");

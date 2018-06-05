@@ -99,11 +99,14 @@ public class UsuarioService {
 		Boolean isValid = Boolean.FALSE;
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		for(Usuario usuarioActual : usuarios) {
-			if(usuarioActual.getIdFacebook() != null && tokenService.getHash(usuarioActual.getIdFacebook()).equals(tokenVinculacion)) {
-				usuarioActual.setIdMessenger(idMessenger);
-				usuarioRepository.save(usuarioActual);
-				isValid = Boolean.TRUE;
-				break;
+			if(usuarioActual.getIdFacebook() != null) {
+				if(tokenService.getHash(usuarioActual.getIdFacebook()).substring(0, NavigationConstants.TOKEN_LENGTH).toUpperCase()
+						.equals(tokenVinculacion)) {
+					usuarioActual.setIdMessenger(idMessenger);
+					usuarioActual = usuarioRepository.save(usuarioActual);
+					isValid = Boolean.TRUE;
+					break;
+				}
 			}
 		}
 		return isValid;

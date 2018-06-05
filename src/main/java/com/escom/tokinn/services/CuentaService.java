@@ -74,8 +74,8 @@ public class CuentaService {
 		         helper.setSubject("Tokinn vinculación");
 		         helper.setFrom("escomcrypto@gmail.com");
 		         helper.setTo(entidad.getEmail());
-		         //helper.addAttachment("logo.png", new ClassPathResource("/static/img/email_1.jpg"));
 		         Map<String, Object> model = new HashMap<String, Object>();
+		         System.out.println("nomnre: "+entidad.getNombre()+" tokenVinculacion: "+tokenVinculacion+" entidad.getEmail(): "+entidad.getEmail());
 		         model.put("nombre", entidad.getNombre());
 		         model.put("contra", tokenVinculacion);
 		         model.put("correo", entidad.getEmail());

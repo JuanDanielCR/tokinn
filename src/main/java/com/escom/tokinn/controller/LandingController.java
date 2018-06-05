@@ -40,8 +40,11 @@ public class LandingController {
 	
 	@GetMapping("/prueba")
 	public ModelAndView prueba() {
-		List<Usuario> listaUsuarios = usuarioService.findUsuarios();
-		System.out.println("listaUsuarios: "+listaUsuarios.isEmpty());
+		if(usuarioService.vincularIdMessenger("9EA47", "idMessenget")) {
+			System.out.println("coool");
+		}else {
+			System.out.println("not cool");
+		}
 		return new ModelAndView(NavigationConstants.LANDING_VIEW);
 	}
 	
