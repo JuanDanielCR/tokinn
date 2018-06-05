@@ -61,9 +61,9 @@
                             <input class="form-control" name="token" th:value="${usuario.token}" id="token" placeholder="Token" disabled>
                             <label id="nota_token">Habilita esta función en tu panel de control.</label>
                         </div>
-                        <input type="text" id="userId" name="userId" th:value="${usuario.id}" class="form-control" style="display:none;" >
+                        <input type="text" id="id" name="id" th:value="${usuario.id}" class="form-control" >
                         <button id="verificar" class="btn btn-primary block full-width m-b">Verificar</button>
-                        <button id="submit" type="submit" class="btn btn-primary block full-width m-b">Entrar</button>
+                        <button id="submit" type="submit" class="btn btn-primary block full-width m-b" style="display:none;">Entrar</button>
                         <a href="#">
                             <small>¿Olvidaste tu contraseña?</small>
                         </a>
@@ -92,7 +92,7 @@ $( document ).ready(function() {
 	$("#password").hide();
 	$("#token").hide();
 	$("#nota_token").hide();
-	$("#submit").hide();
+	$("#id").hide();
     $("#verificar").click(function(event) {
 		event.preventDefault();
 		ajaxPost();
@@ -103,7 +103,6 @@ $( document ).ready(function() {
     		numeroTarjeta : $("#numeroTarjeta").val(),
     		cvv :  $("#cvv").val()
     	}
-
     	$.ajax({
 			type : "POST",
 			contentType : "application/json",
@@ -123,7 +122,6 @@ $( document ).ready(function() {
 					}
 					$("#respuesta_ajax").append( "<p>Datos correctos, por favor ingresa tu información en los campos vacíos</p>" );
 					$("#respuesta_ajax").addClass("alert alert-success");
-					$("#")
 					$("#verificar").hide();
 					$("#sumbit").show();
 				}else{

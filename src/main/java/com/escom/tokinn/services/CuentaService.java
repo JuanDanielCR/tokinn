@@ -79,6 +79,7 @@ public class CuentaService {
 		         model.put("nombre", entidad.getNombre());
 		         model.put("contra", tokenVinculacion);
 		         model.put("correo", entidad.getEmail());
+		         System.out.println("obteniendo template");
 		         String text = getFreeMarkerTemplateContent(model);//Use Freemarker or Velocity
 		         //use the true flag to indicate you need a multipart message
 		         helper.setText(text, true);

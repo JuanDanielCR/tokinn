@@ -75,6 +75,7 @@ public class LandingController {
 	@PostMapping("/login")
 	public String login(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
 		String redirect = NavigationConstants.LOGIN_VIEW;
+		System.out.println("model: "+model.getId());
 		Respuesta<Usuario> respuestaLogin = usuarioService.verificarLogin(model);
 		if(respuestaLogin.getCodigoRespuesta().equals(CodigoRespuesta.OK)) {
 			//Registro exitoso - Subir a session
