@@ -55,6 +55,11 @@ public class UsuarioService {
 		return usuario;
 	}
 	
+	public Usuario findByIdMessenger(String idMessenger) {
+		Usuario usuario = usuarioRepository.findByIdMessenger(idMessenger);
+		return usuario;
+	}
+	
 	public Respuesta<Usuario> verificarLogin(UsuarioModel model) {
 		System.out.println("pass: "+model.getPassword()+" id: "+model.getId());
 		Respuesta<Usuario> respuesta = new Respuesta<Usuario>();
@@ -91,14 +96,16 @@ public class UsuarioService {
 	}
 	
 	public Boolean vincularIdMessenger(String tokenVinculacion, String idMessenger) {
+		Boolean isValid = Boolean.FALSE;
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		for(Usuario usuarioActual : usuarios) {
 			if(usuarioActual.getIdFacebook() != null && tokenService.getHash(usuarioActual.getIdFacebook()).equals(tokenVinculacion)) {
 				usuarioActual.setIdMessenger(idMessenger);
 				usuarioRepository.save(usuarioActual);
+				isValid = Boolean.TRUE;
 				break;
 			}
 		}
-		return Boolean.TRUE;
+		return isValid;
 	}
 }

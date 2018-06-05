@@ -2,25 +2,25 @@ package com.escom.tokinn.constantes;
 
 public class NavigationConstants {
 	//Inicio - Login - Vistas generales
-	public static final String LANDING_VIEW = "/tokinn/landing";
-	public static final String LOGIN_VIEW = "/tokinn/login";
-	public static final String INVERSIONES_VIEW = "/tokinn/inversiones";
-	public static final String AFORES_VIEW = "/tokinn/afores";
-	public static final String BASE_VIEW = "/tokinn/base";
-	public static final String VINCULACION = "/tokinn/vinculacion";
+	public static final String LANDING_VIEW = "landing";
+	public static final String LOGIN_VIEW = "login";
+	public static final String INVERSIONES_VIEW = "inversiones";
+	public static final String AFORES_VIEW = "afores";
+	public static final String BASE_VIEW = "base";
+	public static final String VINCULACION = "vinculacion";
 
 	//Usuario
-	public static final String USUARIO_INDEX = "/usuario/index";
-	public static final String USUARIO_ADD = "/usuario/registrar";
-	public static final String USUARIO_EDIT = "/usuario/editar";
-	public static final String USUARIO_PASSWORD = "/usuario/password";
-	public static final String USUARIO_VIEW = "/usuario/view";
+	public static final String USUARIO_INDEX = "usuario_index";
+	public static final String USUARIO_ADD = "usuario_registrar";
+	public static final String USUARIO_EDIT = "usuario_editar";
+	public static final String USUARIO_PASSWORD = "usuario_password";
+	public static final String USUARIO_VIEW = "usuario_view";
 	
 	//Cuenta
-	public static final String CUENTA_ADD = "/cuenta/registrar";
-	public static final String CUENTA_INDEX = "/cuenta/index";
-	public static final String CUENTA_VULNERABILIDAD = "/cuenta/vulnerabilidad";
-	public static final String CUENTA_PAGOS = "/cuenta/pagos";
+	public static final String CUENTA_ADD = "cuenta_registrar";
+	public static final String CUENTA_INDEX = "cuenta_index";
+	public static final String CUENTA_VULNERABILIDAD = "cuenta_vulnerabilidad";
+	public static final String CUENTA_PAGOS = "cuenta_pagos";
 	
 	//Transaccion
 	public static final String TRANSACCION_ADD = "/transaccion/registrar";

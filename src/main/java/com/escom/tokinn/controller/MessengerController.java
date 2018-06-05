@@ -7,6 +7,7 @@ import static com.github.messenger4j.MessengerPlatform.VERIFY_TOKEN_REQUEST_PARA
 
 import com.escom.tokinn.constantes.Bundle;
 import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.services.TokenService;
 import com.escom.tokinn.services.UsuarioService;
 import com.github.messenger4j.MessengerPlatform;
@@ -73,7 +74,6 @@ public class MessengerController {
     
 	private final MessengerReceiveClient receiveClient;
     private final MessengerSendClient sendClient;
-    private String fbId;
 
     /**
      * Constructs the {@code MessengerPlatformCallbackHandler} and initializes the {@code MessengerReceiveClient}.
@@ -138,13 +138,16 @@ public class MessengerController {
 
     private void sendTokenMessage(String recipientId, String text, String tipoToken) {
         try {
-        	//TODO:Revisar si el ChatBot esta habilitado
-            final Recipient recipient = Recipient.newBuilder().recipientId(recipientId).build();
+        	final Recipient recipient = Recipient.newBuilder().recipientId(recipientId).build();
             final NotificationType notificationType = NotificationType.REGULAR;
             final String metadata = "DEVELOPER_DEFINED_METADATA";
             
-            this.sendClient.sendTextMessage(recipient, notificationType,tokenService.generateToken(fbId, tipoToken), metadata);
-            
+        	Usuario entidad = usuarioService.findByIdMessenger(recipientId);
+        	if(entidad != null) {
+        		this.sendClient.sendTextMessage(recipient, notificationType,tokenService.generateToken(entidad.getIdFacebook(), tipoToken), metadata);
+        	}else {
+        		this.sendClient.sendTextMessage(recipient, notificationType, Bundle.MSG_SIN_VINCULACION, metadata);
+        	}
         } catch (MessengerApiException | MessengerIOException e) {
             handleSendException(e);
         }

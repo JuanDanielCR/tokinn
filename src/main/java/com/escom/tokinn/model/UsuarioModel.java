@@ -3,6 +3,7 @@ package com.escom.tokinn.model;
 public class UsuarioModel {
 	private Long id;
 	private String idFacebook;
+	private String idMessenger;
 	private String password;
 	private String nombre;
 	private String apellidoPaterno;
@@ -103,6 +104,14 @@ public class UsuarioModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getIdMessenger() {
+		return idMessenger;
+	}
+
+	public void setIdMessenger(String idMessenger) {
+		this.idMessenger = idMessenger;
 	}
 	
 }
