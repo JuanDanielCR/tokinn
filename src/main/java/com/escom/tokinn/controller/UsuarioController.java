@@ -14,6 +14,7 @@ import com.escom.tokinn.constantes.NavigationConstants;
 import com.escom.tokinn.converter.UsuarioConverter;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.UsuarioModel;
+import com.escom.tokinn.services.TokenService;
 import com.escom.tokinn.services.UsuarioService;
 
 @Controller
@@ -26,6 +27,19 @@ public class UsuarioController {
 	@Autowired
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
+	
+	//----------
+	@Autowired
+	@Qualifier("tokenService")
+	private TokenService tokenService;
+	
+	
+	@GetMapping("/token")
+	public ModelAndView token() {
+		System.out.println("t: "+tokenService.generateToken("1024260827627402", NavigationConstants.TOKEN_INICIO));
+		return new ModelAndView(NavigationConstants.BASE_VIEW);
+	}
+	//-----------------
 	
 	@GetMapping("/index")
 	public ModelAndView gestionar() {
@@ -51,10 +65,10 @@ public class UsuarioController {
 		entidad = usuarioService.registrarUsuario(entidad);
 		if(entidad != null) {
 			//Registro exitoso
-			redirect = NavigationConstants.LOGIN_VIEW+"/tokinn/login?success=true";
+			redirect = "/tokinn/login?success=true";
 		} else {
 			//Error
-			redirect = NavigationConstants.USUARIO_ADD+"/usuario/registro?error=true";
+			redirect = "/usuario/registro?error=true";
 		}
 		return "redirect:"+redirect;
 	}
