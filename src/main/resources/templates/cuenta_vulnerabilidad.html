@@ -129,6 +129,7 @@
                                 <table class="table invoice-table">
                                     <thead>
                                     <tr>
+                                    	<th>Id</th>
                                         <th>Concepto</th>
                                         <th>Cantidad</th>
                                         <th>Monto</th>
@@ -138,6 +139,11 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="transaccion, stat : ${transaccionFormModel.transacciones}">
+                                    	<td>
+		                                    <div class="form-group">
+					                            <input th:value="${transaccion.getIdTransaccion()}" class="form-control" th:name="|transacciones[${stat.index}].idTransaccion|" id="idtransaccion" placeholder="Descripcion">
+					                        </div>
+				                        </td>
                                     	<td>
 		                                    <div class="form-group">
 					                            <input th:value="${transaccion.getDescripcion()}" class="form-control" th:name="|transacciones[${stat.index}].descripcion|" id="descripcion" placeholder="Descripcion">

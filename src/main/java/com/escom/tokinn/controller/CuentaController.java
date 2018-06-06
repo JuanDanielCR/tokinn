@@ -55,31 +55,21 @@ public class CuentaController {
 	@GetMapping("/registro")
 	public ModelAndView registrar() {
 		return new ModelAndView(NavigationConstants.CUENTA_ADD);
-	}
-
-	@GetMapping("/crear")
-	public ModelAndView crear() {
-		return new ModelAndView(NavigationConstants.CUENTA_CREAR);
 	}	
 	
 	@GetMapping("/gestion")
-	public ModelAndView gestionar(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
+	public ModelAndView gestionar(Model model, ModelMap session) {
 		Double amount = 0.0;
 		Usuario usuario = (Usuario) session.get("userData");
-		for(Cuenta cuenta : usuario.getCuentas()) {
-			System.out.println("Cuenta: "+cuenta.getNumeroCuenta());
-		}
 		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
 		for(TransaccionModel transaccion : transacciones) {
 			amount+=transaccion.getAmount();
 		}
-		ModelAndView mav = new ModelAndView();
 		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
-		//transaccionFormModel.setAmount(amount);
 		transaccionFormModel.setTransacciones(transacciones);
-		mav.setViewName(NavigationConstants.CUENTA_INDEX);
-		mav.addObject("transaccionFormModel", transaccionFormModel);
-		return mav;
+		model.addAttribute("amount", amount);
+		model.addAttribute("transaccionFormModel", transaccionFormModel);
+		return new ModelAndView(NavigationConstants.CUENTA_INDEX);
 	}
 	
 	@GetMapping("/test")
@@ -99,6 +89,7 @@ public class CuentaController {
 		System.out.println("TamanioTransacciones: "+transaccionFormModel.getTransacciones());
 		Transaccion transaccion;
 		for(TransaccionModel transaccionModel : transaccionFormModel.getTransacciones()) {
+			System.out.println("IdTransaccionModel: "+transaccionModel.getIdTransaccion());
 			transaccion = new Transaccion();
 			transaccion = transaccionConverter.modelToEntity(transaccionModel);
 			transaccion = transaccionService.edit(transaccion);
