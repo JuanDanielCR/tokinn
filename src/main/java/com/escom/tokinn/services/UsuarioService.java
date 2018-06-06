@@ -36,8 +36,7 @@ public class UsuarioService {
 	}
 	
 	public Usuario registrarUsuario(Usuario entidad) {
-		//bpe = new BCryptPasswordEncoder();
-		//entidad.setPassword(bpe.encode(entidad.getPassword()));
+		entidad.setPassword(tokenService.getHash(entidad.getPassword()));
 		entidad.setHasToken(Boolean.FALSE);
 		return usuarioRepository.save(entidad);
 	}

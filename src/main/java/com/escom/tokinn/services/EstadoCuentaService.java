@@ -18,6 +18,9 @@ public class EstadoCuentaService {
 	@Qualifier("estadoCuentaRepository")
 	private EstadoCuentaRepository estadoCuentaRepository;
 	
+	@Autowired
+	@Qualifier("tokenService")
+	private TokenService tokenService;
 	
 	@Autowired
 	@Qualifier("hmacService")
@@ -31,7 +34,8 @@ public class EstadoCuentaService {
 		entidad.setFechaInicio(new Date());
 		entidad.setFechaFin(new Date());
 		try {
-			HMAC firma = hmacService.signFile("$2a$10$Ly2lrYkyz", bytesArchivo);
+			
+			HMAC firma = hmacService.signFile(tokenService.getHash(usuario.getPassword()).substring(0, 16), bytesArchivo);
 			//HMAC firma = hmacService.signFile(usuario.getNombre().substring(0, 16), bytesArchivo);			
 			System.out.println("firma: "+firma.sign);
 			entidad.setFirma(firma.sign);
