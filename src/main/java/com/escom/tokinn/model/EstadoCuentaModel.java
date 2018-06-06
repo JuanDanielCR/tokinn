@@ -2,18 +2,30 @@ package com.escom.tokinn.model;
 
 import java.util.Date;
 
+import com.escom.tokinn.entity.Cuenta;
+
 public class EstadoCuentaModel {
+	private Long idEstadoCuenta;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private Date fechaExpedicion;
 	private String key;
 	private String tokenAutorizacion;
 	private String firma;
+	private Cuenta cuentaEstado;
 	
 	public EstadoCuentaModel() {
 		super();
 	}
 
+	public Long getIdEstadoCuenta() {
+		return idEstadoCuenta;
+	}
+	
+	public void setIdEstadoCuenta(Long idEstadoCuenta) {
+		this.idEstadoCuenta = idEstadoCuenta;
+	}
+	
 	public Date getFechaInicio() {
 		return fechaInicio;
 	}
@@ -60,6 +72,14 @@ public class EstadoCuentaModel {
 
 	public void setFirma(String firma) {
 		this.firma = firma;
+	}
+	
+	public Cuenta getCuentaEstado() {
+		return cuentaEstado;
+	}
+	
+	public void setCuentaEstado(Cuenta cuentaEstado) {
+		this.cuentaEstado = cuentaEstado;
 	}
 	
 }

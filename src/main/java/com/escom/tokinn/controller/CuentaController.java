@@ -24,10 +24,12 @@ import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.CuentaModel;
+import com.escom.tokinn.model.EstadoCuentaModel;
 import com.escom.tokinn.model.TransaccionFormModel;
 import com.escom.tokinn.model.TransaccionModel;
 import com.escom.tokinn.model.UsuarioModel;
 import com.escom.tokinn.services.CuentaService;
+import com.escom.tokinn.services.EstadoCuentaService;
 import com.escom.tokinn.services.TransaccionService;
 
 @Controller
@@ -49,6 +51,10 @@ public class CuentaController {
 	@Autowired
 	@Qualifier("cuentaConverter")
 	private CuentaConverter cuentaConverter;
+	
+	@Autowired
+	@Qualifier("estadoCuentaService")
+	private EstadoCuentaService estadoCuentaService;
 	
 	private List<TransaccionModel> a = new ArrayList<>();
 	
@@ -132,16 +138,9 @@ public class CuentaController {
 	
 	@GetMapping("/crear")
 	public ModelAndView crear(Model model, ModelMap session) {
-		Double amount = 0.0;
 		Usuario usuario = (Usuario) session.get("userData");
-		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
-		for(TransaccionModel transaccion : transacciones) {
-			amount+=transaccion.getAmount();
-		}
-		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
-		transaccionFormModel.setTransacciones(transacciones);
-		model.addAttribute("amount", amount);
-		model.addAttribute("transaccionFormModel", transaccionFormModel);
+		List<EstadoCuentaModel> estadoCuentaModelList = estadoCuentaService.findByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
+		model.addAttribute("estadoCuentaModelList", estadoCuentaModelList);
 		return new ModelAndView(NavigationConstants.CUENTA_CREAR);
 	}	
 }

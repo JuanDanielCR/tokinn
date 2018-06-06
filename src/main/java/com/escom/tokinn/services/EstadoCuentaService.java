@@ -1,15 +1,19 @@
 package com.escom.tokinn.services;
 
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.escom.tokinn.component.HMAC;
+import com.escom.tokinn.converter.EstadoCuentaConverter;
 import com.escom.tokinn.entity.EstadoCuenta;
 import com.escom.tokinn.entity.Usuario;
+import com.escom.tokinn.model.EstadoCuentaModel;
 import com.escom.tokinn.repository.EstadoCuentaRepository;
 
 @Service("estadoCuentaService")
@@ -25,6 +29,10 @@ public class EstadoCuentaService {
 	@Autowired
 	@Qualifier("hmacService")
 	private HMACService hmacService;
+	
+	@Autowired
+	@Qualifier("estadoCuentaConverter")
+	private EstadoCuentaConverter estadoCuentaConverter;
 	
 	public OutputStream firmarEstadoDeCuenta(Usuario usuario, byte[] bytesArchivo) {
 		EstadoCuenta entidad = new EstadoCuenta();
@@ -45,5 +53,17 @@ public class EstadoCuentaService {
 		}
 		estadoCuentaRepository.save(entidad);
 		return null;
+	}
+	
+	public List<EstadoCuentaModel> findByIdCuenta(Long idCuenta) {
+		List<EstadoCuenta> estadoCuentaList = estadoCuentaRepository.findAllByIdCuenta(idCuenta);
+		List<EstadoCuentaModel> estadoCuentaModelList = new ArrayList<>();
+		EstadoCuentaModel estadoCuentaModel;
+		for(EstadoCuenta estadoCuenta : estadoCuentaList) {
+			estadoCuentaModel = new EstadoCuentaModel();
+			estadoCuentaModel = estadoCuentaConverter.entityToModel(estadoCuenta);
+			estadoCuentaModelList.add(estadoCuentaModel);
+		}
+		return estadoCuentaModelList;
 	}
 }
