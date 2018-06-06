@@ -1,5 +1,7 @@
 package com.escom.tokinn.model;
 
+import com.escom.tokinn.entity.Cuenta;
+
 public class UsuarioModel {
 	private Long id;
 	private String idFacebook;
@@ -13,6 +15,7 @@ public class UsuarioModel {
 	private String telefono;
 	private String token;
 	private Boolean hasToken;
+	private Cuenta cuenta;
 	
 	public UsuarioModel() {
 		super();
@@ -112,6 +115,14 @@ public class UsuarioModel {
 
 	public void setIdMessenger(String idMessenger) {
 		this.idMessenger = idMessenger;
+	}
+	
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+	
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
 	}
 	
 }
