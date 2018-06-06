@@ -9,6 +9,7 @@ import com.escom.tokinn.model.TransaccionModel;
 public class TransaccionConverter {
 	public TransaccionModel entityToModel(Transaccion entidad) {
 		TransaccionModel model = new TransaccionModel();
+		model.setIdTransaccion(entidad.getIdTransaccion());
 		model.setAmount(entidad.getAmount());
 		model.setCantidad(entidad.getCantidad());
 		model.setDescripcion(entidad.getDescripcion());
@@ -22,6 +23,7 @@ public class TransaccionConverter {
 	
 	public Transaccion modelToEntity(TransaccionModel model) {
 		Transaccion entidad = new Transaccion();
+		entidad.setIdTransaccion(model.getIdTransaccion());
 		entidad.setAmount(model.getAmount());
 		entidad.setCantidad(model.getCantidad());
 		entidad.setDescripcion(model.getDescripcion());

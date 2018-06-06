@@ -116,7 +116,8 @@ $( document ).ready(function() {
 				if(result.status == "Done"){
 					$("#password").show();
 					$("#token").show();
-					if(result.data.hasToken == null || result.data.hasToken == false || result.data.idMessenger == null){
+					//|| result.data.idMessenger == null
+					if(result.data.hasToken == null || result.data.hasToken == false ){
 						console.log("aqui")
 						$("#nota_token").show();
 					}else{

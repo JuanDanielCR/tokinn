@@ -49,7 +49,18 @@ public class TransaccionService {
 	}
 	
 	public Transaccion edit(Transaccion model) {
-		return transaccionRepository.save(model);
+		System.out.println("IdTransaccion: "+model.getIdTransaccion());
+		Transaccion transaccionActualizar = transaccionRepository.getOne(model.getIdTransaccion());
+		System.out.println("IdTransaccionActuaizar: "+transaccionActualizar.getIdTransaccion());
+		transaccionActualizar.setAmount(model.getAmount());
+		transaccionActualizar.setCantidad(model.getCantidad());
+		transaccionActualizar.setDescripcion(model.getDescripcion());
+		transaccionActualizar.setFechaTransaccion(model.getFechaTransaccion());
+		transaccionActualizar.setNombreItem(model.getNombreItem());
+		transaccionActualizar.setPrecioUnitario(model.getPrecioUnitario());
+		transaccionActualizar.setProducto(model.getProducto());
+		transaccionActualizar.setTokenAutorizacion(model.getTokenAutorizacion());
+		return transaccionRepository.save(transaccionActualizar);
 	}
 	
 }

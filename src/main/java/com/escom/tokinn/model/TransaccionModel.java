@@ -3,6 +3,7 @@ package com.escom.tokinn.model;
 import java.util.Date;
 
 public class TransaccionModel {
+	private Long idTransaccion;
 	private	String nombreItem;
 	private	String descripcion;
 	private	String tokenAutorizacion;
@@ -14,6 +15,14 @@ public class TransaccionModel {
 	
 	public TransaccionModel() {
 		super();
+	}
+	
+	public Long getIdTransaccion() {
+		return idTransaccion;
+	}
+	
+	public void setIdTransaccion(Long idTransaccion) {
+		this.idTransaccion = idTransaccion;
 	}
 
 	public String getNombreItem() {
