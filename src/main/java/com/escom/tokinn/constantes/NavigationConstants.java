@@ -34,5 +34,5 @@ public class NavigationConstants {
     public static final String TOKEN_ESTADO = "ESTADO_DE_CUENTA";
     public static final String TOKEN_TRANSACCION = "TRANSACCION";
     public static final Integer TOKEN_LENGTH=5;
-    
+    public static final String CONFIRMAR_FACE = "confirmarFace";
 }

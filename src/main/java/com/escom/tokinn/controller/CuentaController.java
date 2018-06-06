@@ -49,6 +49,12 @@ public class CuentaController {
 	public ModelAndView registrar() {
 		return new ModelAndView(NavigationConstants.CUENTA_ADD);
 	}
+
+	@GetMapping("/confirmar")
+	public ModelAndView confirmar() {
+		return new ModelAndView(NavigationConstants.CONFIRMAR_FACE);
+	}	
+	
 	
 	@GetMapping("/gestion")
 	public ModelAndView gestionar(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
