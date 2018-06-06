@@ -48,11 +48,6 @@ public class CuentaController {
 	@GetMapping("/registro")
 	public ModelAndView registrar() {
 		return new ModelAndView(NavigationConstants.CUENTA_ADD);
-	}
-
-	@GetMapping("/crear")
-	public ModelAndView crear() {
-		return new ModelAndView(NavigationConstants.CUENTA_CREAR);
 	}	
 	
 	@GetMapping("/gestion")

@@ -6,65 +6,331 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>BBWA Registro</title>
+    <title>BBWA | Cuenta</title>
 
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
-    <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet">
-    <link th:href="@{/css/animate.css}" rel="stylesheet">
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{css/animate.css}" rel="stylesheet">
+    <link th:href="@{css/style.css}" rel="stylesheet">
 
 </head>
 
-<body class="gray-bg">
+<body>
 
-    <div class="middle-box text-center loginscreen   animated fadeInDown">
-        <div>
-            <div>
-                <h2><b>BBWA Bankito</b></h2>
+    <div id="wrapper">
+
+      <nav class="navbar-default navbar-static-side" role="navigation">
+          <div class="sidebar-collapse">
+              <ul class="nav metismenu" id="side-menu">
+                  <li class="nav-header">
+                      <div class="dropdown profile-element"> <span>
+                              <img alt="image" class="img-circle" src="img/profile_small.jpg" />
+                               </span>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">USER!!</strong>
+                      </div>
+                      <div class="logo-element">
+                          BBWA
+                      </div>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-th-large"></i><span>Index</span></a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-file-text"></i> <span class="nav-label">Estado de cuentas</span></a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-file-text"></i> <span class="nav-label">Simulación de vulnerabilidad</span></a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Pagos</span></a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Inversiones</span></a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-blind"></i> <span class="nav-label">Afores</span></a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-credit-card"></i> <span class="nav-label">Gestionar cuentas</span></a>
+                  </li>
+
+              </ul>
+
+          </div>
+      </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+          <div class="row border-bottom">
+          <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+          <div class="navbar-header">
+              <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+          </div>
+              <ul class="nav navbar-top-links navbar-right">
+                  <li>
+                      <span class="m-r-sm text-muted welcome-message">Bienvenido a BBWA Bankito</span>
+                  </li>
+                  <li>
+                    <a href="login.html">
+                        <i class="fa fa-facebook"></i> Habilitar token con FB
+                    </a>
+                  </li>
+                  <li>
+                      <form th:action="@{/tokinn/logout}" method="POST">
+  						                <input type="submit" class="btn btn-success" value="Salir" />
+  					          </form>
+                  </li>
+              </ul>
+          </nav>
+          </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-8">
+                    <h2>Estado de cuentas</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="active">
+                            <strong>Estado de cuentas</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-4">
+                    <div class="title-action">
+                        <a href="#" target="_blank" class="btn btn-primary"><i class="fa fa-file-text"></i> Crear estado de cuentas </a>
+                    </div>
+                </div>
             </div>
-            <h3>Información de la tarjeta</h3>
-            <form class="m-t" role="form" action="login.html">
-                <div class="form-group">
-                    <input class="form-control" placeholder="Número de cuenta" required="">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="ibox-content p-xl">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <address>
+                                        <strong>BBWA, Bankito</strong><br>
+                                        Av. Juan de Dios Bátiz, Nueva Industrial<br/>
+                                        Vallejo, 07738 Ciudad de México, CDMX<br/>
+                                        P: 01 55 5729 6000<br/>
+                                    </address>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-12 text-right">
+                              <table class="table invoice-table">
+                                  <thead>
+                                  <tr>
+                                      <th>
+                                        Desde
+                                      </th>
+                                      <th>
+                                        <select class="w3-select w3-border" name="option">
+                                          <option value="" disabled selected>Selecciona el día</option>
+                                          <option value="1">1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="1">4</option>
+                                          <option value="2">5</option>
+                                          <option value="3">6</option>
+                                          <option value="1">7</option>
+                                          <option value="2">8</option>
+                                          <option value="3">9</option>
+                                          <option value="1">10</option>
+                                          <option value="2">12</option>
+                                          <option value="3">13</option>
+                                          <option value="1">14</option>
+                                          <option value="2">15</option>
+                                          <option value="3">16</option>
+                                          <option value="1">17</option>
+                                          <option value="2">18</option>
+                                          <option value="3">19</option>
+                                          <option value="1">20</option>
+                                          <option value="2">21</option>
+                                          <option value="3">23</option>
+                                          <option value="1">24</option>
+                                          <option value="2">25</option>
+                                          <option value="3">26</option>
+                                          <option value="1">27</option>
+                                          <option value="2">28</option>
+                                          <option value="3">29</option>
+                                          <option value="1">30</option>
+                                          <option value="2">31</option>
+                                        </select>
+                                      </th>
+                                      <th>
+                                        <select class="w3-select w3-border" name="option">
+                                          <option value="" disabled selected>Selecciona el mes</option>
+                                          <option value="1">enereo</option>
+                                          <option value="2">febrero</option>
+                                          <option value="3">marzo</option>
+                                          <option value="1">abril</option>
+                                          <option value="2">mayo</option>
+                                          <option value="3">junio</option>
+                                          <option value="1">julio</option>
+                                          <option value="2">agosto</option>
+                                          <option value="3">septiembre</option>
+                                          <option value="1">octubre</option>
+                                          <option value="2">noviembre</option>
+                                          <option value="3">diciembre</option>
+                                        </select>
+                                      </th>
+                                      <th>
+                                        <select class="w3-select w3-border" name="option">
+                                          <option value="" disabled selected>Selecciona el año</option>
+                                          <option value="1">2012</option>
+                                          <option value="2">2013</option>
+                                          <option value="3">2014</option>
+                                          <option value="1">2015</option>
+                                          <option value="2">2016</option>
+                                          <option value="3">2017</option>
+                                          <option value="1">2018</option>
+                                        </select>
+                                      </th>
+                                  </tr>
+                                </thread>
+                              </table>
+                            </div>
+                            <br/>
+                            <hr>
+
+
+                            <div class="col-sm-12 text-right">
+                              <table class="table invoice-table">
+                                  <thead>
+                                  <tr>
+                                    <th>
+                                      Hasta
+                                    </th>
+                                      <th>
+                                        <select class="w3-select w3-border" name="option">
+                                          <option value="" disabled selected>Selecciona el día</option>
+                                          <option value="1">1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="1">4</option>
+                                          <option value="2">5</option>
+                                          <option value="3">6</option>
+                                          <option value="1">7</option>
+                                          <option value="2">8</option>
+                                          <option value="3">9</option>
+                                          <option value="1">10</option>
+                                          <option value="2">12</option>
+                                          <option value="3">13</option>
+                                          <option value="1">14</option>
+                                          <option value="2">15</option>
+                                          <option value="3">16</option>
+                                          <option value="1">17</option>
+                                          <option value="2">18</option>
+                                          <option value="3">19</option>
+                                          <option value="1">20</option>
+                                          <option value="2">21</option>
+                                          <option value="3">23</option>
+                                          <option value="1">24</option>
+                                          <option value="2">25</option>
+                                          <option value="3">26</option>
+                                          <option value="1">27</option>
+                                          <option value="2">28</option>
+                                          <option value="3">29</option>
+                                          <option value="1">30</option>
+                                          <option value="2">31</option>
+                                        </select>
+                                      </th>
+                                      <th>
+                                        <select class="w3-select w3-border" name="option">
+                                          <option value="" disabled selected>Selecciona el mes</option>
+                                          <option value="1">enereo</option>
+                                          <option value="2">febrero</option>
+                                          <option value="3">marzo</option>
+                                          <option value="1">abril</option>
+                                          <option value="2">mayo</option>
+                                          <option value="3">junio</option>
+                                          <option value="1">julio</option>
+                                          <option value="2">agosto</option>
+                                          <option value="3">septiembre</option>
+                                          <option value="1">octubre</option>
+                                          <option value="2">noviembre</option>
+                                          <option value="3">diciembre</option>
+                                        </select>
+                                      </th>
+                                      <th>
+                                        <select class="w3-select w3-border" name="option">
+                                          <option value="" disabled selected>Selecciona el año</option>
+                                          <option value="1">2012</option>
+                                          <option value="2">2013</option>
+                                          <option value="3">2014</option>
+                                          <option value="1">2015</option>
+                                          <option value="2">2016</option>
+                                          <option value="3">2017</option>
+                                          <option value="1">2018</option>
+                                        </select>
+                                      </th>
+                                  </tr>
+                                </thread>
+                              </table>
+                            </div>
+                            <br/>
+                            <hr>
+
+
+                            <div class="table-responsive m-t">
+                                <table class="table invoice-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Concepto</th>
+                                        <th>Cantidad</th>
+                                        <th>Monto</th>
+                                        <th>IVA</th>
+                                        <th>Precio total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="transacciones : ${transaccionFormModel.transacciones}">
+                                        <td th:text="${transacciones.descripcion}"><div><strong></strong></div>
+                                        <td th:text="${transacciones.cantidad}"></td>
+                                        <td th:text="${transacciones.precioUnitario}">$</td>
+                                        <td>$0.00 MN</td>
+                                        <td th:text="${transacciones.amount}">$</td>
+                                    </tr>
+                                    <tr>
+                                    	<td></td>
+	                                    <td></td>
+	                                    <td></td>
+	                                    <td><strong>TOTAL: </strong></td>
+	                                    <td th:text="${transaccionFormModel.amount}"></td>
+	                                </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="text-right">
+                                <button class="btn btn-primary"><i class="fa fa-dollar"></i> Hacer otro pago</button>
+                            </div>
+                        </div>
                 </div>
-                <div class="form-group">
-                    <input class="form-control" placeholder="CVV" required="">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" placeholder="Fecha de vencimiento MM/AA" required="">
-                </div>
-                <div class="form-group">
-                  <select class="form-control">
-                    <option value="" disabled>Seleccione su tipo de tarjeta</option>
-                    <option value="volvo">Tarjeta de Crédito BBWA Bankito</option>
-                    <option value="saab">Tarjeta de Débito BBWA Bankito</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Acepta los términos de condición</label></div>
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Regístrate</button>
-                <p class="text-muted text-center"><small>¿Ya tienes una cuenta?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="login_two_columns.html">Login</a
-            </form>
-            <p class="m-t"> <small>&copy; 2018</small> </p>
+            </div>
         </div>
-    </div>
+        <div class="footer">
+            <div>
+                <strong>Copyright</strong> BBWA Bankito &copy; 2012-2018
+            </div>
+        </div>
+
+        </div>
+        </div>
 
     <!-- Mainly scripts -->
-    <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <!-- iCheck -->
-    <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
-    <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-        });
-    </script>
+    <script th:src="@{js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+    <script th:src="@{js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{js/inspinia.js}"></script>
+    <script th:src="@{js/plugins/pace/pace.min.js}"></script>
+
+
 </body>
 
 </html>
