@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.escom.tokinn.constantes.Bundle;
@@ -31,9 +30,6 @@ public class UsuarioService {
 	@Autowired
 	@Qualifier("cuentaRepository")
 	private CuentaRepository cuentaRepository;
-	
-	private BCryptPasswordEncoder bpe;
-	
 	
 	public List<Usuario> findUsuarios(){
 		return usuarioRepository.findAll();

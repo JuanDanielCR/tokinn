@@ -86,20 +86,21 @@ public class EstadoCuentaController {
 	@GetMapping("/reporte")
 	public @ResponseBody void transactionPDF(HttpServletResponse response, ModelMap session) {
 		try {
+			Usuario usuario = (Usuario) session.get("userData");
 			InputStream  jasperStream  = this.getClass().getResourceAsStream("/jasperreports/reports/transaccion.jrxml");
 			JasperDesign design = JRXmlLoader.load(jasperStream);
 			JasperReport report = JasperCompileManager.compileReport(design);
 			
 			Map<String, Object> parameterMap = new HashMap<>();
 		
-			List<TransaccionModel> transacciones = transaccionService.findAll();
+			List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(0).getIdCuenta());
 			JRDataSource jRDataSource = new JRBeanCollectionDataSource(transacciones);
 			
 			parameterMap.put("datasource",jRDataSource);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameterMap, jRDataSource);
 			byte[] output = JasperExportManager.exportReportToPdf(jasperPrint);
 			
-			Usuario usuario = (Usuario) session.get("userData");
+			
 			estadoCuentaService.firmarEstadoDeCuenta(usuario, output);
 			
 			response.setContentType("application/x-pdf");

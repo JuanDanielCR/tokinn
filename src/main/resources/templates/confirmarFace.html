@@ -54,7 +54,7 @@
                                 </tr>
                                 <tr>
                                     <td class="content-block aligncenter">
-                                      <a class="btn btn-success btn-facebook btn-outline">
+                                      <a id="btnFacebook" class="btn btn-success btn-facebook btn-outline" href="/cuenta/vinculacion">
                                           <i class="fa fa-facebook"> </i> Confirmar
                                       </a>
                                     </td>
@@ -68,6 +68,45 @@
         <td></td>
     </tr>
 </table>
-
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script>
+	var idFacebook = "";
+	$.get("/user", function(data){
+		idFacebook = data.userAuthentication.details.id;
+		console.log("id: "+data.userAuthentication.details.id);
+		console.log("client_id: "+data.userAuthentication.details.clientid);
+		console.log("data:"+JSON.stringify(data));
+	});
+	
+	$("#btnFacebook").click(function(event) {
+		event.preventDefault();
+		ajaxPost();
+	});
+    function ajaxPost(){
+    	var formData = {
+    		idUsuario : $("#idUser").text(),
+    		idFacebook :  idFacebook
+    	}
+    	$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : "/api/fb_data",
+			data : JSON.stringify(formData),
+			dataType : 'json',
+			success : function(result) {
+				if(result.status == "Done"){
+					console.log("exito");
+					$(location).attr("href", "http://localhost:8080/cuenta/vinculacion"); 
+				}else{
+					console.log("error");
+				}
+			},
+			error : function(e) {
+				alert("!Oh, algo salió mal, intenta más tarde!")
+				console.log("ERROR: ", e);
+			}
+		});
+    }
+	</script>
 </body>
 </html>

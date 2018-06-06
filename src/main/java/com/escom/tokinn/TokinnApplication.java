@@ -97,7 +97,7 @@ public class TokinnApplication extends WebSecurityConfigurerAdapter {
 	
 	@RequestMapping("/")
 	public ModelAndView loginFacebook() {
-		return new ModelAndView(NavigationConstants.BASE_VIEW);
+		return new ModelAndView(NavigationConstants.CONFIRMAR_FACE);
 	}
 	
 	/**

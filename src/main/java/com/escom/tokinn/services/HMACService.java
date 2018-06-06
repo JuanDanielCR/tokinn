@@ -43,8 +43,8 @@ public class HMACService {
 	/*Esta función es la que se manda llmar, se encarga de cifrar y firmar cada documento, la llave del HMAC está compuesta por el ID
     del usuario y el úlrimo bloque del cifrado AES del archivo a enviar, los parametros son el ID del usuario, el nombre del archivo 
     a cifrar y el nombre del archivo cifrado y firmado*/
-    public HMAC signFile(String idUsuario, String nombreArchivo, byte[]pdfBytes) throws Throwable {
-        AES aesFile = encryptAES(idUsuario, nombreArchivo, pdfBytes);
+    public HMAC signFile(String idUsuario, byte[]pdfBytes) throws Throwable {
+        AES aesFile = encryptAES(idUsuario, pdfBytes);
         String plainKey = idUsuario + aesFile.hmacKey;
         SecretKey hmacKey = new SecretKeySpec(plainKey.getBytes("UTF-8"), "HMACSHA512");
         byte[] firmaDocumento = HMAC(hmacKey, pdfBytes);
@@ -65,7 +65,7 @@ public class HMACService {
     }
 
     /*Esta función retorna el archivo cifrado, la llave del cfrado es el ID del usuario*/
-    private AES encryptAES(String idUsuario, String nombreArchivo, byte[]pdfBytes) throws Throwable {
+    private AES encryptAES(String idUsuario, byte[]pdfBytes) throws Throwable {
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(idUsuario.getBytes("UTF-8"), "AES"));
         InputStream input = new ByteArrayInputStream(pdfBytes);

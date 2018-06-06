@@ -12,15 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.escom.tokinn.constantes.NavigationConstants;
 import com.escom.tokinn.constantes.NumerosConstantes;
+import com.escom.tokinn.converter.CuentaConverter;
 import com.escom.tokinn.converter.TransaccionConverter;
 import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
+import com.escom.tokinn.model.CuentaModel;
 import com.escom.tokinn.model.TransaccionFormModel;
 import com.escom.tokinn.model.TransaccionModel;
 import com.escom.tokinn.model.UsuarioModel;
@@ -42,6 +45,10 @@ public class CuentaController {
 	@Autowired
 	@Qualifier("transaccionConverter")
 	private TransaccionConverter transaccionConverter;
+	
+	@Autowired
+	@Qualifier("cuentaConverter")
+	private CuentaConverter cuentaConverter;
 	
 	private List<TransaccionModel> a = new ArrayList<>();
 	
@@ -101,7 +108,34 @@ public class CuentaController {
 	}
 	
 	@GetMapping("/pagos")
-	public ModelAndView inicio() {
+	public ModelAndView inicio(Model model,
+			@RequestParam(name="token", required=false) String token) {
+		model.addAttribute("transaccion", new TransaccionModel());
+		model.addAttribute("cuenta", new CuentaModel());
+		model.addAttribute("token", token);
 		return new ModelAndView(NavigationConstants.CUENTA_PAGOS);
+	}
+	
+	@PostMapping("/pagos")
+	public String login(@ModelAttribute("transaccion") TransaccionModel modelTransaccion,
+						@ModelAttribute("cuenta") CuentaModel modelCuenta, 
+						ModelMap session) {
+		String redirect = "/usuario/index";
+		Usuario usuario = (Usuario) session.get("userData");
+		System.out.println("antes: "+modelTransaccion.getPrecioUnitario());
+		Transaccion respuesta = transaccionService.add(transaccionConverter.modelToEntity(modelTransaccion), 
+				usuario, cuentaConverter.modelToEntity(modelCuenta));
+		if(respuesta.getIdTransaccion()==null){
+			redirect = "/cuenta/pagos?token=true";
+		}
+		
+		return "redirect:"+redirect;
+	}
+	
+	@GetMapping("/vinculacion")
+	public ModelAndView vinculacion(ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		cuentaService.notificarRegistro(usuario);
+		return new ModelAndView(NavigationConstants.USUARIO_INDEX);
 	}
 }
