@@ -12,10 +12,13 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import javax.crypto.Cipher;
+
+import org.springframework.stereotype.Service;
+
 import java.io.ByteArrayOutputStream;
 
 @Service("rsaService")
-public class RSA {
+public class RSAService {
 	
 	//FUNCIÓN PARA GENERAR PAR DE LLAVES
     public static KeyPair buildKeyPair() throws NoSuchAlgorithmException {
