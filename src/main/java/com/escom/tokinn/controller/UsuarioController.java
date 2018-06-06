@@ -51,7 +51,11 @@ public class UsuarioController {
 	//-----------------
 	
 	@GetMapping("/index")
-	public ModelAndView gestionar() {
+	public ModelAndView gestionar(Model model, ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		usuarioModel.setCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO));
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.USUARIO_INDEX);
 	}
 	

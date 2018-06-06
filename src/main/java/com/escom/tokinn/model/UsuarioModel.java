@@ -125,4 +125,8 @@ public class UsuarioModel {
 		this.cuenta = cuenta;
 	}
 	
+	public String getNombreCompleto() {
+		return ""+nombre+" "+apellidoPaterno+" "+apellidoMaterno;
+	}
+	
 }
