@@ -50,11 +50,10 @@ public class CuentaController {
 		return new ModelAndView(NavigationConstants.CUENTA_ADD);
 	}
 
-	@GetMapping("/confirmar")
-	public ModelAndView confirmar() {
-		return new ModelAndView(NavigationConstants.CONFIRMAR_FACE);
+	@GetMapping("/crear")
+	public ModelAndView crear() {
+		return new ModelAndView(NavigationConstants.CUENTA_CREAR);
 	}	
-	
 	
 	@GetMapping("/gestion")
 	public ModelAndView gestionar(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
