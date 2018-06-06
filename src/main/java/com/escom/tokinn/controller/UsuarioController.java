@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.constantes.NumerosConstantes;
 import com.escom.tokinn.converter.UsuarioConverter;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.UsuarioModel;
@@ -19,6 +22,7 @@ import com.escom.tokinn.services.UsuarioService;
 
 @Controller
 @RequestMapping("/usuario")
+@SessionAttributes("userData")
 public class UsuarioController {
 	@Autowired
 	@Qualifier("usuarioService")
@@ -52,7 +56,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/view")
-	public ModelAndView showview() {
+	public ModelAndView showview(Model model, ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		usuarioModel.setCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO));
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.USUARIO_VIEW);
 	}		
 	
