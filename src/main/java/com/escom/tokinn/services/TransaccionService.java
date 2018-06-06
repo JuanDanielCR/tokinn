@@ -49,7 +49,7 @@ public class TransaccionService {
 	}
 	
 	public Transaccion edit(Transaccion model) {
-		return transaccionRepository.saveAndFlush(model);
+		return transaccionRepository.save(model);
 	}
 	
 }
