@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Confirmación</title>
+    <!--
+    <link href="styles.css" media="all" rel="stylesheet" type="text/css" />
+    -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    
+</head>
+
+<body>
+
+<table class="body-wrap">
+    <tr>
+        <td></td>
+        <td class="container" width="600">
+            <div class="content">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="content-wrap">
+                            <table  cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <img class="img-responsive" th:src="@{/img/Tokinn.jpg}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
+                                        <h3>Has desactivado el tokinn con facebook</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
+                                        Si confirmas este servicio,
+                                        a partir de ahora no podrás hacer uso del token a través del messenger de facebook.
+                                        El acceso a tu perfil de usuario será menos seguro, así como también la generación de tus
+                                        estados de cuenta. Tu información contará ahora con una capa menos de seguridad.
+                                    </td>
+                                 </tr>
+                                 <tr>   
+
+                                    <td class="content-block aligncenter">
+                                      <a id="btnFacebook" class="btn btn-success btn-facebook btn-outline" href="/cuenta/vinculacion">
+                                          <i class="fa fa-facebook"> </i> Confirmar :(
+                                      </a>
+                                    </td>
+                                </tr>
+                              </table>
+                        </td>
+                    </tr>
+                </table>
+ </div>
+        </td>
+        <td></td>
+    </tr>
+</table>
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script>
+	var idFacebook = "";
+	$.get("/user", function(data){
+		idFacebook = data.userAuthentication.details.id;
+		console.log("id: "+data.userAuthentication.details.id);
+		console.log("client_id: "+data.userAuthentication.details.clientid);
+		console.log("data:"+JSON.stringify(data));
+	});
+	
+	$("#btnFacebook").click(function(event) {
+		event.preventDefault();
+		ajaxPost();
+	});
+    function ajaxPost(){
+    	var formData = {
+    		idUsuario : $("#idUser").text(),
+    		idFacebook :  idFacebook
+    	}
+    	$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : "/api/fb_data",
+			data : JSON.stringify(formData),
+			dataType : 'json',
+			success : function(result) {
+				if(result.status == "Done"){
+					console.log("exito");
+					$(location).attr("href", "http://localhost:8080/cuenta/vinculacion"); 
+				}else{
+					console.log("error");
+				}
+			},
+			error : function(e) {
+				alert("!Oh, algo salió mal, intenta más tarde!")
+				console.log("ERROR: ", e);
+			}
+		});
+    }
+	</script>
+</body>
+</html>

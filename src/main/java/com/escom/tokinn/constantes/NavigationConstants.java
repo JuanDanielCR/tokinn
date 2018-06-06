@@ -36,4 +36,5 @@ public class NavigationConstants {
     public static final String TOKEN_TRANSACCION = "TRANSACCION";
     public static final Integer TOKEN_LENGTH=5;
     public static final String CONFIRMAR_FACE = "confirmarFace";
+    public static final String DESVINCULAR_TOKEN = "desvincular_token";
 }
