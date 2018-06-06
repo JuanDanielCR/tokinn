@@ -84,21 +84,13 @@ public class CuentaController {
 	@PostMapping("/test")
 	public ModelAndView edit(@ModelAttribute TransaccionFormModel transaccionFormModel, Model  model) {
 		System.out.println("IngreseAlMetodoPost");
-		//System.out.println("Amount: "+transaccionFormModel.getAmount());
 		System.out.println("TamanioTransacciones: "+transaccionFormModel.getTransacciones());
-		/*for(TransaccionModel transaccionModel : transacciones){ 
-			System.out.println("Cantidad: "+transaccionModel.getCantidad());
-			System.out.println("PrecioUnitario: "+transaccionModel.getPrecioUnitario());
+		Transaccion transaccion;
+		for(TransaccionModel transaccionModel : transaccionFormModel.getTransacciones()) {
+			transaccion = new Transaccion();
+			transaccion = transaccionConverter.modelToEntity(transaccionModel);
+			transaccion = transaccionService.edit(transaccion);
 		}
-		Transaccion transaccion = transaccionConverter.modelToEntity(model);
-		transaccion = transaccionService.edit(transaccion);
-		if(transaccion != null) {
-			//Actualización exitosa
-			System.out.println("Actualización Exitosa");
-		} else {
-			//Actualizacion Fallida
-			System.out.println("Actualización Fallida");
-		}*/
 		model.addAttribute("transaccionFormModel", transaccionFormModel);
 		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
