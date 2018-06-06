@@ -21,6 +21,7 @@ import com.escom.tokinn.converter.TransaccionConverter;
 import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
+import com.escom.tokinn.model.TransaccionFormModel;
 import com.escom.tokinn.model.TransaccionModel;
 import com.escom.tokinn.model.UsuarioModel;
 import com.escom.tokinn.services.CuentaService;
@@ -42,6 +43,8 @@ public class CuentaController {
 	@Qualifier("transaccionConverter")
 	private TransaccionConverter transaccionConverter;
 	
+	private List<TransaccionModel> a = new ArrayList<>();
+	
 	@GetMapping("/registro")
 	public ModelAndView registrar() {
 		return new ModelAndView(NavigationConstants.CUENTA_ADD);
@@ -51,8 +54,6 @@ public class CuentaController {
 	public ModelAndView gestionar(@ModelAttribute("usuario") UsuarioModel model, ModelMap session) {
 		Double amount = 0.0;
 		Usuario usuario = (Usuario) session.get("userData");
-		System.out.println("Usuario: "+usuario.getNombre());
-		System.out.println("Vamos bien");
 		for(Cuenta cuenta : usuario.getCuentas()) {
 			System.out.println("Cuenta: "+cuenta.getNumeroCuenta());
 		}
@@ -61,33 +62,44 @@ public class CuentaController {
 			amount+=transaccion.getAmount();
 		}
 		ModelAndView mav = new ModelAndView();
+		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
+		//transaccionFormModel.setAmount(amount);
+		transaccionFormModel.setTransacciones(transacciones);
 		mav.setViewName(NavigationConstants.CUENTA_INDEX);
-		mav.addObject("amount", amount);
-		mav.addObject("transacciones",transacciones);
+		mav.addObject("transaccionFormModel", transaccionFormModel);
 		return mav;
 	}
 	
 	@GetMapping("/test")
 	public ModelAndView test(Model model, ModelMap session) {
-		model.addAttribute("transaccionModel", new TransaccionModel());
 		Usuario usuario = (Usuario) session.get("userData");
 		System.out.println("Usuario: "+usuario.getNombre());
+		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
 		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(NavigationConstants.CUENTA_VULNERABILIDAD);
-		mav.addObject("transacciones",transacciones);
-		return mav;
+		transaccionFormModel.setTransacciones(transacciones);
+		model.addAttribute("transaccionFormModel", transaccionFormModel);
+		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
 	
-	@PostMapping("test")
-	public ModelAndView edit(@ModelAttribute("transaccionModel") TransaccionModel model) {
+	@PostMapping("/test")
+	public ModelAndView edit(@ModelAttribute TransaccionFormModel transaccionFormModel, Model  model) {
+		System.out.println("IngreseAlMetodoPost");
+		//System.out.println("Amount: "+transaccionFormModel.getAmount());
+		System.out.println("TamanioTransacciones: "+transaccionFormModel.getTransacciones());
+		/*for(TransaccionModel transaccionModel : transacciones){ 
+			System.out.println("Cantidad: "+transaccionModel.getCantidad());
+			System.out.println("PrecioUnitario: "+transaccionModel.getPrecioUnitario());
+		}
 		Transaccion transaccion = transaccionConverter.modelToEntity(model);
 		transaccion = transaccionService.edit(transaccion);
 		if(transaccion != null) {
 			//Actualización exitosa
+			System.out.println("Actualización Exitosa");
 		} else {
 			//Actualizacion Fallida
-		}
+			System.out.println("Actualización Fallida");
+		}*/
+		model.addAttribute("transaccionFormModel", transaccionFormModel);
 		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
 	
