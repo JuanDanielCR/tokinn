@@ -129,4 +129,19 @@ public class CuentaController {
 		cuentaService.notificarRegistro(usuario);
 		return new ModelAndView(NavigationConstants.USUARIO_INDEX);
 	}
+	
+	@GetMapping("/crear")
+	public ModelAndView crear(Model model, ModelMap session) {
+		Double amount = 0.0;
+		Usuario usuario = (Usuario) session.get("userData");
+		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
+		for(TransaccionModel transaccion : transacciones) {
+			amount+=transaccion.getAmount();
+		}
+		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
+		transaccionFormModel.setTransacciones(transacciones);
+		model.addAttribute("amount", amount);
+		model.addAttribute("transaccionFormModel", transaccionFormModel);
+		return new ModelAndView(NavigationConstants.CUENTA_CREAR);
+	}	
 }
