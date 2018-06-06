@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BBWA Registro</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="loginColumns animated fadeInDown">
+      <h1 style="text-align:center"><strong>Registro BBWA Bankito</strong></h1>
+      <div class="alert alert-danger" th:if="${error != null}">
+       	El usuario no pudo ser registrado, inténtalo más tarde
+      </div>
+      <h4 style="text-align:center">Recuerda habilitar la opción de tokinn
+        desde tu perfil para disfrutar de los
+        beneficios de una cuenta más segura</h4>
+        <div class="row ibox-content">
+          <form class="m-t" role="form" method = "post" th:action="@{/usuario/registro}" th:object="${usuario}">
+                  <div>
+                    <div class="form-group">
+                      <input class="form-control" placeholder="Nombre" th:field="*{nombre}" required="true">
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" placeholder="Apellido materno" th:field="*{apellidoPaterno}" required="true">
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" placeholder="Apellido paterno" th:field="*{apellidoMaterno}" required="true">
+                    </div>
+                    <div class="form-group">
+                      <input class="form-control" placeholder="e-mail" th:field="*{email}" required="true">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" placeholder="contraseña" th:field="*{password}" required="true">
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Ciudad" th:field="*{direccion}" required="true">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Tlf: 55-123456" th:field="*{telefono}" required="true">
+                    </div>
+                  </div>
+              <button type="submit" class="btn btn-primary block full-width m-b">Registrar</button>
+            </form>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                Copyright BBWA Bankito
+            </div>
+            <div class="col-md-6 text-right">
+               <small>© 2018</small>
+            </div>
+        </div>
+    </div>
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{/js/plugins/flot/jquery.flot.js}"></script>
+    <script th:src="@{/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+    <script th:src="@{/js/plugins/flot/jquery.flot.spline.js}"></script>
+    <script th:src="@{/js/plugins/flot/jquery.flot.resize.js}"></script>
+    <script th:src="@{/js/plugins/flot/jquery.flot.pie.js}"></script>
+    <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+    <script th:src="@{/js/demo/peity-demo.js}"></script>
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+    <script th:src="@{/js/plugins/gritter/jquery.gritter.min.js}"></script>
+    <script th:src="@{/js/plugins/sparkline/jquery.sparkline.min.js}"></script>
+    <script th:src="@{/js/plugins/chartJs/Chart.min.js}"></script>
+    <script th:src="@{/js/plugins/toastr/toastr.min.js}"></script>
+    <script>
+    	<![CDATA[
+        	$(document).ready(function() {	 
+            	$("#btnRegistro").click(function(){
+            	var a = $("#txtNombre");
+            	var b = $("#txtPass");
+            	var c = $("#txtCorreo");
+            	if(a.text() != "" && b.text() != "" && c.text()!=""){
+            		setTimeout(function() {
+                	    toastr.options = {
+                        closeButton: true,
+                    	progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 4000
+                    };
+                    toastr.success('¡Bienvenido!', 'Tokinn'); }, 1300);
+            		} 		
+           		})
+            })
+        ]]>
+    </script>
+</body>
+
+</html>

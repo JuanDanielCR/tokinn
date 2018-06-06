@@ -27,6 +27,11 @@ public class UsuarioController {
 	@Autowired
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
+
+	@GetMapping("/confirmar")
+	public ModelAndView confirmar() {
+		return new ModelAndView(NavigationConstants.CONFIRMAR_FACE);
+	}		
 	
 	//----------
 	@Autowired

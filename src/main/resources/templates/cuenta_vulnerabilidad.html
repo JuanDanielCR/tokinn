@@ -125,6 +125,7 @@
                             </div>
 
                             <div class="table-responsive m-t">
+                            <form id="cuentaForm" name="formVulnerabilidad" action="#" method = "post" th:action="@{/cuenta/test}" th:object="${transaccionFormModel}" class="m-t" role="form">
                                 <table class="table invoice-table">
                                     <thead>
                                     <tr>
@@ -136,22 +137,33 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><div><strong>COMPRA EN TOTAL PLAY CR</strong></div>
-                                        <td>1</td>
-                                        <td><input style="text-align:right" placeholder="$459.00 MN"></input></td>
-                                        <td><input style="text-align:right" placeholder="$0.00 MN"></input></td>
-                                        <td><input style="text-align:right" placeholder="$459.00 MN"></input></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div><strong>COMPRA EN NETFLIX</strong></div>
-                                        <td>1</td>
-                                        <td><input style="text-align:right" placeholder="$199.00 MN"></input></td>
-                                        <td><input style="text-align:right" placeholder="$0.00 MN"></input></td>
-                                        <td><input style="text-align:right" placeholder="$199.00 MN"></input></td>
+                                    <tr th:each="transaccion, stat : ${transaccionFormModel.transacciones}">
+                                    	<td>
+		                                    <div class="form-group">
+					                            <input th:value="${transaccion.getDescripcion()}" class="form-control" th:name="|transacciones[${stat.index}].descripcion|" id="descripcion" placeholder="Descripcion">
+					                        </div>
+				                        </td>
+				                        <td>
+		                                    <div class="form-group">
+					                            <input th:value="${transaccion.getCantidad()}" class="form-control" th:name="|transacciones[${stat.index}].cantidad|" id="cantidad" placeholder="Cantidad">
+					                        </div>
+				                        </td>
+				                        <td>
+		                                    <div class="form-group">
+					                            <input th:value="${transaccion.getPrecioUnitario()}" class="form-control" th:name="|transacciones[${stat.index}].precioUnitario|" id="precioUnitario" placeholder="PrecioUnitario">
+					                        </div>
+				                        </td>
+				                        <td>$0.00 MN</td>
+				                        <td>
+		                                    <div class="form-group">
+					                            <input th:value="${transaccion.getAmount()}" class="form-control" th:name="|transacciones[${stat.index}].amount|" id="amount" placeholder="Amount">
+					                        </div>
+				                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
+                                <button id="submit" type="submit" class="btn btn-primary block full-width m-b" style="display:none;">Guardar</button>
+                            </form>
                             </div><!-- /table-responsive -->
 
 

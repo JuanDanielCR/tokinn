@@ -15,6 +15,9 @@ spring:
           auth: true
           starttls:
             enable: true
+  freemarker:
+    template-loader-path: classpath:/templates
+    suffix: .ftl
   jpa:
     show-sql: true
     hibernate:

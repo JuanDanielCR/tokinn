@@ -21,6 +21,7 @@ public class NavigationConstants {
 	public static final String CUENTA_INDEX = "cuenta_index";
 	public static final String CUENTA_VULNERABILIDAD = "cuenta_vulnerabilidad";
 	public static final String CUENTA_PAGOS = "cuenta_pagos";
+	public static final String CUENTA_CREAR = "cuenta_crear";
 	
 	//Transaccion
 	public static final String TRANSACCION_ADD = "/transaccion/registrar";
@@ -34,5 +35,5 @@ public class NavigationConstants {
     public static final String TOKEN_ESTADO = "ESTADO_DE_CUENTA";
     public static final String TOKEN_TRANSACCION = "TRANSACCION";
     public static final Integer TOKEN_LENGTH=5;
-    
+    public static final String CONFIRMAR_FACE = "confirmarFace";
 }
