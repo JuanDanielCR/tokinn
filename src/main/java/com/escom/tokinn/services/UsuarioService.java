@@ -106,4 +106,13 @@ public class UsuarioService {
 		}
 		return isValid;
 	}
+	
+	public Usuario update(Usuario usuario) {
+		Usuario usuarioUpdate = usuarioRepository.getOne(usuario.getIdUsuario());
+		usuarioUpdate.setIdFacebook(null);
+		usuarioUpdate.setIdMessenger(null);
+		usuarioUpdate.setHasToken(Boolean.FALSE);
+		usuarioUpdate = usuarioRepository.save(usuarioUpdate);
+		return usuarioUpdate;
+	}
 }

@@ -49,9 +49,9 @@
                                  <tr>   
 
                                     <td class="content-block aligncenter">
-                                      <a id="btnFacebook" class="btn btn-success btn-facebook btn-outline" href="/cuenta/vinculacion">
-                                          <i class="fa fa-facebook"> </i> Confirmar :(
-                                      </a>
+                                    <form id="vulnerabilidadForm" name="formVulnerabilidad" action="#" method = "post" th:action="@{/usuario/desvincularToken}"  class="m-t" role="form">
+                                      <button id="submit" type="submit" class="btn btn-primary block full-width m-b" style="display:none;"><i class="fa fa-facebook"> </i> Confirmar :(</button>
+                                      </form>
                                     </td>
                                 </tr>
                               </table>

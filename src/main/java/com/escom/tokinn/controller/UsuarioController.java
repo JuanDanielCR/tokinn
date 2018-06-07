@@ -32,14 +32,21 @@ public class UsuarioController {
 	@Qualifier("usuarioConverter")
 	private UsuarioConverter usuarioConverter;
 
-	@GetMapping("/confirmar")
-	public ModelAndView confirmar() {
-		return new ModelAndView(NavigationConstants.CONFIRMAR_FACE);
-	}		
-
 	@GetMapping("/desvincular")
-	public ModelAndView desconfirmar() {
+	public ModelAndView desvincular(Model model, ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.DESVINCULAR_TOKEN);
+	}
+	
+	@PostMapping("/desvincularToken")
+	public ModelAndView desvincularToken(Model model, ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		usuario = usuarioService.update(usuario);
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
+		return new ModelAndView(NavigationConstants.USUARIO_INDEX);
 	}			
 	
 	//----------
@@ -51,6 +58,7 @@ public class UsuarioController {
 	@GetMapping("/token")
 	public ModelAndView token() {
 		System.out.println("t: "+tokenService.generateToken("1024260827627402", NavigationConstants.TOKEN_INICIO));
+		//System.out.println("t: "+tokenService.generateToken("1748760568547978", NavigationConstants.TOKEN_INICIO));
 		return new ModelAndView(NavigationConstants.BASE_VIEW);
 	}
 	//-----------------
