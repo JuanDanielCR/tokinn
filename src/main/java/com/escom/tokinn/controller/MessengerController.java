@@ -214,6 +214,9 @@ public class MessengerController {
                     case "typing off":
                         sendTypingOff(senderId);
                         break;
+                    case "Fin":
+                    	sendTextMessage(senderId, "¡Gracias y continúa disfrutando de EXPO-ESCOM!");
+                        break;
                     default:
                         sendTextMessage(senderId, messageText);
             		}
