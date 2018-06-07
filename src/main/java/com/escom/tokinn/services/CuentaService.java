@@ -62,7 +62,6 @@ public class CuentaService {
 	            javaMailSender.send(preparator);
 	        }
 	        catch (MailException ex) {
-	            // simply log it and go on...
 	            System.err.println(ex.getMessage());
 	        }
 		return 0;
@@ -75,11 +74,10 @@ public class CuentaService {
 		         helper.setFrom("escomcrypto@gmail.com");
 		         helper.setTo(entidad.getEmail());
 		         Map<String, Object> model = new HashMap<String, Object>();
-		         System.out.println("nomnre: "+entidad.getNombre()+" tokenVinculacion: "+tokenVinculacion+" entidad.getEmail(): "+entidad.getEmail());
+		         System.out.println("TokenVinculacion: "+tokenVinculacion+" email: "+entidad.getEmail());
 		         model.put("nombre", entidad.getNombre());
 		         model.put("contra", tokenVinculacion);
 		         model.put("correo", entidad.getEmail());
-		         System.out.println("obteniendo template");
 		         String text = getFreeMarkerTemplateContent(model);//Use Freemarker or Velocity
 		         //use the true flag to indicate you need a multipart message
 		         helper.setText(text, true);

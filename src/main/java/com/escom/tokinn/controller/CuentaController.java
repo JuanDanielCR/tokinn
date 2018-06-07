@@ -20,6 +20,7 @@ import com.escom.tokinn.constantes.NavigationConstants;
 import com.escom.tokinn.constantes.NumerosConstantes;
 import com.escom.tokinn.converter.CuentaConverter;
 import com.escom.tokinn.converter.TransaccionConverter;
+import com.escom.tokinn.converter.UsuarioConverter;
 import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
@@ -45,6 +46,10 @@ public class CuentaController {
 	private TransaccionService transaccionService;
 	
 	@Autowired
+	@Qualifier("estadoCuentaService")
+	private EstadoCuentaService estadoCuentaService;
+	
+	@Autowired
 	@Qualifier("transaccionConverter")
 	private TransaccionConverter transaccionConverter;
 	
@@ -53,8 +58,8 @@ public class CuentaController {
 	private CuentaConverter cuentaConverter;
 	
 	@Autowired
-	@Qualifier("estadoCuentaService")
-	private EstadoCuentaService estadoCuentaService;
+	@Qualifier("usuarioConverter")
+	private UsuarioConverter usuarioConverter;
 	
 	private List<TransaccionModel> a = new ArrayList<>();
 	
@@ -91,8 +96,6 @@ public class CuentaController {
 	
 	@PostMapping("/test")
 	public ModelAndView edit(@ModelAttribute TransaccionFormModel transaccionFormModel, Model  model) {
-		System.out.println("IngreseAlMetodoPost");
-		System.out.println("TamanioTransacciones: "+transaccionFormModel.getTransacciones());
 		Transaccion transaccion;
 		for(TransaccionModel transaccionModel : transaccionFormModel.getTransacciones()) {
 			System.out.println("IdTransaccionModel: "+transaccionModel.getIdTransaccion());
@@ -130,9 +133,12 @@ public class CuentaController {
 	}
 	
 	@GetMapping("/vinculacion")
-	public ModelAndView vinculacion(ModelMap session) {
+	public ModelAndView vinculacion(Model model, ModelMap session) {
 		Usuario usuario = (Usuario) session.get("userData");
 		cuentaService.notificarRegistro(usuario);
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
+		System.out.println("----> Vinculacion terminada");
 		return new ModelAndView(NavigationConstants.USUARIO_INDEX);
 	}
 	
