@@ -27,7 +27,7 @@
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" th:src="@{/img/profile_small.jpg}" />
                              </span>
-                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">USER!!</strong>
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold" th:text="${usuarioModel.getNombreCompleto()}"></strong>
                     </div>
                     <div class="logo-element">
                         BBWA
@@ -126,9 +126,9 @@
                                 <table class="table invoice-table">
                                     <thead>
                                     <tr>
-                                        <th>FechaExpedicion</th>
-                                      	<th>FechaInicio</th>
-                                      	<th>FechaFin</th>
+                                        <th>Fecha Expedicion</th>
+                                      	<th>Fecha Inicio</th>
+                                      	<th>Fecha Fin</th>
                                       	<th>Firma</th>
                                       	<th>Key</th>
                                       	<th>Token de autorización</th>

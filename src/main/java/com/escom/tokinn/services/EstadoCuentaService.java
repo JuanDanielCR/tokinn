@@ -1,7 +1,12 @@
 package com.escom.tokinn.services;
 
 import java.io.OutputStream;
+import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +36,10 @@ public class EstadoCuentaService {
 	private HMACService hmacService;
 	
 	@Autowired
+	@Qualifier("rsaService")
+	private RSAService rsaService;  
+	
+	@Autowired
 	@Qualifier("estadoCuentaConverter")
 	private EstadoCuentaConverter estadoCuentaConverter;
 	
@@ -53,6 +62,22 @@ public class EstadoCuentaService {
 		}
 		estadoCuentaRepository.save(entidad);
 		return null;
+	}
+	
+	public String rsear(byte[]elarchivo) throws NoSuchAlgorithmException {
+	    KeyPair keypair = rsaService.buildKeyPair();
+	    PublicKey publicKey = keypair.getPublic();
+	    PrivateKey privateKey = keypair.getPrivate();
+	    
+	    try {
+			rsaService.RSAencrypt(privateKey, elarchivo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    return Base64.getEncoder().encodeToString(privateKey.getEncoded());
+	    
 	}
 	
 	public List<EstadoCuentaModel> findByIdCuenta(Long idCuenta) {

@@ -37,7 +37,7 @@ public class UsuarioController {
 		return new ModelAndView(NavigationConstants.CONFIRMAR_FACE);
 	}		
 
-	@GetMapping("/desconfirmar")
+	@GetMapping("/desvincular")
 	public ModelAndView desconfirmar() {
 		return new ModelAndView(NavigationConstants.DESVINCULAR_TOKEN);
 	}			

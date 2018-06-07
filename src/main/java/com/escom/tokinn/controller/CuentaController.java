@@ -21,7 +21,6 @@ import com.escom.tokinn.constantes.NumerosConstantes;
 import com.escom.tokinn.converter.CuentaConverter;
 import com.escom.tokinn.converter.TransaccionConverter;
 import com.escom.tokinn.converter.UsuarioConverter;
-import com.escom.tokinn.entity.Cuenta;
 import com.escom.tokinn.entity.Transaccion;
 import com.escom.tokinn.entity.Usuario;
 import com.escom.tokinn.model.CuentaModel;
@@ -78,6 +77,8 @@ public class CuentaController {
 		}
 		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
 		transaccionFormModel.setTransacciones(transacciones);
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		model.addAttribute("amount", amount);
 		model.addAttribute("transaccionFormModel", transaccionFormModel);
 		return new ModelAndView(NavigationConstants.CUENTA_INDEX);
@@ -90,6 +91,8 @@ public class CuentaController {
 		TransaccionFormModel transaccionFormModel = new TransaccionFormModel();
 		List<TransaccionModel> transacciones = transaccionService.findAllByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
 		transaccionFormModel.setTransacciones(transacciones);
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		model.addAttribute("transaccionFormModel", transaccionFormModel);
 		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
@@ -98,7 +101,6 @@ public class CuentaController {
 	public ModelAndView edit(@ModelAttribute TransaccionFormModel transaccionFormModel, Model  model) {
 		Transaccion transaccion;
 		for(TransaccionModel transaccionModel : transaccionFormModel.getTransacciones()) {
-			System.out.println("IdTransaccionModel: "+transaccionModel.getIdTransaccion());
 			transaccion = new Transaccion();
 			transaccion = transaccionConverter.modelToEntity(transaccionModel);
 			transaccion = transaccionService.edit(transaccion);
@@ -108,8 +110,11 @@ public class CuentaController {
 	}
 	
 	@GetMapping("/pagos")
-	public ModelAndView inicio(Model model,
+	public ModelAndView inicio(Model model, ModelMap session,
 			@RequestParam(name="token", required=false) String token) {
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		model.addAttribute("transaccion", new TransaccionModel());
 		model.addAttribute("cuenta", new CuentaModel());
 		model.addAttribute("token", token);
@@ -122,7 +127,6 @@ public class CuentaController {
 						ModelMap session) {
 		String redirect = "/usuario/index";
 		Usuario usuario = (Usuario) session.get("userData");
-		System.out.println("antes: "+modelTransaccion.getPrecioUnitario());
 		Transaccion respuesta = transaccionService.add(transaccionConverter.modelToEntity(modelTransaccion), 
 				usuario, cuentaConverter.modelToEntity(modelCuenta));
 		if(respuesta.getIdTransaccion()==null){
@@ -147,6 +151,8 @@ public class CuentaController {
 		Usuario usuario = (Usuario) session.get("userData");
 		List<EstadoCuentaModel> estadoCuentaModelList = estadoCuentaService.findByIdCuenta(usuario.getCuentas().get(NumerosConstantes.NUMERO_CERO).getIdCuenta());
 		model.addAttribute("estadoCuentaModelList", estadoCuentaModelList);
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.CUENTA_CREAR);
 	}	
 }
