@@ -26,7 +26,7 @@
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" th:src="@{/img/profile_small.jpg}" />
                              </span>
-                          <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">USER!!</strong>
+                          <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold" th:text="${usuarioModel.getNombreCompleto()}"></strong>
                     </div>
                       <div class="logo-element">
                           BBWA

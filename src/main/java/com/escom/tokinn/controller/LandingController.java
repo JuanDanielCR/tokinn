@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.escom.tokinn.constantes.CodigoRespuesta;
 import com.escom.tokinn.constantes.NavigationConstants;
+import com.escom.tokinn.constantes.NumerosConstantes;
 import com.escom.tokinn.constantes.Respuesta;
 import com.escom.tokinn.converter.UsuarioConverter;
 import com.escom.tokinn.entity.Usuario;
@@ -52,12 +53,18 @@ public class LandingController {
 	}
 	
 	@GetMapping("/afores")
-	public ModelAndView afore() {
+	public ModelAndView afore(Model model, ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.AFORES_VIEW);
 	}
 	
 	@GetMapping("/inversiones")
-	public ModelAndView inversiones() {
+	public ModelAndView inversiones(Model model, ModelMap session) {
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.INVERSIONES_VIEW);
 	}
 	
