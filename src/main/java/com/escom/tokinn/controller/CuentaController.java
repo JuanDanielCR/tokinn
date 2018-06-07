@@ -98,7 +98,7 @@ public class CuentaController {
 	}
 	
 	@PostMapping("/test")
-	public ModelAndView edit(@ModelAttribute TransaccionFormModel transaccionFormModel, Model  model) {
+	public ModelAndView edit(@ModelAttribute TransaccionFormModel transaccionFormModel, Model  model, ModelMap session) {
 		Transaccion transaccion;
 		for(TransaccionModel transaccionModel : transaccionFormModel.getTransacciones()) {
 			transaccion = new Transaccion();
@@ -106,6 +106,9 @@ public class CuentaController {
 			transaccion = transaccionService.edit(transaccion);
 		}
 		model.addAttribute("transaccionFormModel", transaccionFormModel);
+		Usuario usuario = (Usuario) session.get("userData");
+		UsuarioModel usuarioModel = usuarioConverter.entityToModel(usuario);
+		model.addAttribute("usuarioModel", usuarioModel);
 		return new ModelAndView(NavigationConstants.CUENTA_VULNERABILIDAD);
 	}
 	
@@ -131,8 +134,7 @@ public class CuentaController {
 				usuario, cuentaConverter.modelToEntity(modelCuenta));
 		if(respuesta.getIdTransaccion()==null){
 			redirect = "/cuenta/pagos?token=true";
-		}
-		
+		}	
 		return "redirect:"+redirect;
 	}
 	

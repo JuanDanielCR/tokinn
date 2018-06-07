@@ -2,6 +2,7 @@ package com.escom.tokinn.services;
 
 import java.io.OutputStream;
 import java.security.KeyPair;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -54,9 +55,12 @@ public class EstadoCuentaService {
 			
 			HMAC firma = hmacService.signFile(tokenService.getHash(usuario.getPassword()).substring(0, 16), bytesArchivo);
 			//HMAC firma = hmacService.signFile(usuario.getNombre().substring(0, 16), bytesArchivo);			
-			System.out.println("firma: "+firma.sign);
+			System.out.println("Firma: "+firma.sign);
 			entidad.setFirma(firma.sign);
 			entidad.setKey(firma.key);	
+			
+			MessageDigest md = MessageDigest.getInstance("SHA-1"); 
+			System.out.println("Estado de Cuenta: "+rsear(md.digest(bytesArchivo)));
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -68,16 +72,12 @@ public class EstadoCuentaService {
 	    KeyPair keypair = rsaService.buildKeyPair();
 	    PublicKey publicKey = keypair.getPublic();
 	    PrivateKey privateKey = keypair.getPrivate();
-	    
 	    try {
 			rsaService.RSAencrypt(privateKey, elarchivo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    
 	    return Base64.getEncoder().encodeToString(privateKey.getEncoded());
-	    
 	}
 	
 	public List<EstadoCuentaModel> findByIdCuenta(Long idCuenta) {
